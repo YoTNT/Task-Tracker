@@ -1,0 +1,73 @@
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let item of userProgress; let i = index">
+      <ion-col size-med="10" offset-med="1">
+        <ion-card
+          [ngStyle]="
+            i < userProgress?.length - 1
+              ? { 'margin-top': '-8px', 'margin-bottom': '3px' }
+              : { 'margin-top': '-8px', 'margin-bottom': '30%' }
+          "
+        >
+          <ion-card-header>
+            <ion-title
+              size="medium"
+              style="text-align: left; padding-left: 40px;"
+              color="primary"
+            >
+              <b> {{ item.userName }}</b>
+            </ion-title>
+
+            <ion-badge
+              [color]="
+                item.progress > 99
+                  ? 'success'
+                  : item.progress < 50
+                  ? 'warning'
+                  : 'primary'
+              "
+              style="float: right;"
+            >
+              {{ item.progress }}%
+            </ion-badge>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item button (click)="presentPopover()">
+              Total Tasks &nbsp;
+              <ion-title color="secondary">
+                <b> ({{ item.totaltasks }})</b></ion-title
+              >
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- <ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let item of userProgress">
+      <ion-col size-med="10" offset-med="1">
+        
+          <ion-card-header>
+            <ion-label>
+              <b> {{ item.userName }}</b>
+            </ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-crad-title>
+                <b> Task:  </b>  {{ item.taskName }}
+              </ion-crad-title>
+            </ion-item>
+            <ion-item>
+              <ion-crad-title>
+           <b> Progress:  </b> {{ item.progress }}%
+              </ion-crad-title>
+            </ion-item>
+          </ion-card-content>
+    
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content> -->

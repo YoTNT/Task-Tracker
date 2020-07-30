@@ -1,0 +1,7 @@
+{
+  "name": "TaskTracker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
