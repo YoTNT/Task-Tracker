@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { UserTasksComponent } from '../Components/user-tasks/user-tasks.component';
  
  
 const routes: Routes = [
@@ -12,6 +13,10 @@ const routes: Routes = [
         path: 'users-progress',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
         // the above route is equal to: loadChildren:'../tab1/tab1.module#Tab1PageModule'
+        ,children:[
+          {path: "", loadChildren:'../tab1/tab1.module#Tab1PageModule'},
+          {path: ":userid",component: UserTasksComponent},
+        ]
       },
       {
         path: 'my-tasklist',
@@ -28,11 +33,7 @@ const routes: Routes = [
       // }
     ]
   },
-  // {
-  //   path: 'd',
-  //   loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule),
-  //   pathMatch: 'full'
-  // }
+ 
 ];
 
 @NgModule({

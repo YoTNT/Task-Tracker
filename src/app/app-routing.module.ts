@@ -13,19 +13,7 @@ const routes: Routes = [
     //loadChildren: () =>import("./tabs/tabs.module").then((m) => m.TabsPageModule),
     children: [
       { path: "", loadChildren: "./tabs/tabs.module#TabsPageModule" },
-      {
-        path: "task-list",
-        children: [
-          {
-            path: "",
-            component: UserTasksComponent,
-          },
-          {
-            path: ":userid",
-            component: UserTasksComponent,
-          },
-        ],
-      },
+  
     ],
   },
 ];
