@@ -68,23 +68,27 @@
                 <img src="../assets/avatar.svg" />
               </ion-avatar>
               <ion-label class="ion-text-start ion-text-capitalize">
-                <ion-label color="primary" position="stacked"> <b>{{ item.userName }}</b></ion-label>
+                <ion-label color="primary" mode="ios" position="stacked">
+                  <b>{{ item.userName }}</b></ion-label
+                >
 
-                <ion-label  position="stacked">
+                <ion-label mode="ios" position="stacked">
                   Total Tasks <b>({{ item.totaltasks }}) </b>
                 </ion-label>
-
-                <ion-badge
-                  [color]="
-                    item.progress > 99
-                      ? 'success'
-                      : item.progress < 50
-                      ? 'warning'
-                      : 'primary'
-                  "
-                >
-                  {{ item.progress }}%
-                </ion-badge>
+                <ion-label mode="ios" position="stacked">
+                  <ion-badge
+                    style="margin: 0px;"
+                    [color]="
+                      item.progress > 99
+                        ? 'success'
+                        : item.progress < 50
+                        ? 'warning'
+                        : 'primary'
+                    "
+                  >
+                    {{ item.progress }}%
+                  </ion-badge>
+                </ion-label>
               </ion-label>
             </ion-item>
           </ion-col>
@@ -99,7 +103,6 @@
                 margin-left: 5px;
                 margin-right: 5px;
               "
-              
               size="large"
               class="ion-text-end"
             ></ion-icon>

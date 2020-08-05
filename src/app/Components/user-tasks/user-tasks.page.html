@@ -1,20 +1,21 @@
 <ion-content>
-  <ion-header> </ion-header>
-  <ion-grid no-padding>
+  
+  <ion-grid no-padding ion-no-margin>
     <ion-row>
       <ion-col size="12" size-lg="6" offset-med="3" offset-lg="3">
         <ion-row>
-          <ion-col size="12" >
+          <ion-col size="12">
             <ion-item>
-              <ion-buttons slot="end">
+              <ion-buttons slot="start"  >
                 <ion-back-button
                   text=""
+           
                   defaultHref="/users-progress"
                 ></ion-back-button>
               </ion-buttons>
 
               <ion-label slot="" color="primary">
-                {{user.userName}}
+                <b> {{user.userName}}</b>
               </ion-label>
               <ion-avatar slot="start" name="avatar">
                 <img src="../assets/avatar.svg" />
@@ -24,13 +25,11 @@
         ><ion-row>
           <ion-col size="auto">
             <ion-chip outline color="primary">
-              <ion-label>
-                Tasks <b>({{userProgress.length}}) </b></ion-label
-              >
+              <ion-label> Tasks <b>({{userProgress.length}}) </b></ion-label>
             </ion-chip>
           </ion-col>
-          <ion-col size="auto">
-            <ion-chip outline color="warning">
+          <ion-col size="auto"  >
+            <ion-chip outline color="warning"  >
               <ion-label>
                 In-Progress <b>({{getTotalInProgress()}}) </b>
               </ion-label>
