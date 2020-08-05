@@ -62,18 +62,18 @@
           *ngFor="let item of userProgress; let i = index"
           style="justify-items: left;"
         >
-          <ion-col >
-            <ion-item button [routerLink]="['./', item.userId ]">
+          <ion-col>
+            <ion-item button [routerLink]="['./', item.userId]">
               <ion-avatar slot="start" name="avatar">
                 <img src="../assets/avatar.svg" />
               </ion-avatar>
               <ion-label class="ion-text-start ion-text-capitalize">
-                <h2>
-                  <ion-label color="primary"> {{ item.userName }}</ion-label>
-                </h2>
-                <h3>
-                  Total Tasks <b>({{ item.totaltasks }})  </b>
-                </h3>
+                <ion-label color="primary" position="stacked"> <b>{{ item.userName }}</b></ion-label>
+
+                <ion-label  position="stacked">
+                  Total Tasks <b>({{ item.totaltasks }}) </b>
+                </ion-label>
+
                 <ion-badge
                   [color]="
                     item.progress > 99
@@ -99,6 +99,7 @@
                 margin-left: 5px;
                 margin-right: 5px;
               "
+              
               size="large"
               class="ion-text-end"
             ></ion-icon>
