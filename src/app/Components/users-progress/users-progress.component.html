@@ -62,8 +62,8 @@
           *ngFor="let item of userProgress; let i = index"
           style="justify-items: left;"
         >
-          <ion-col>
-            <ion-item button (click)="presentPopover()">
+          <ion-col >
+            <ion-item button [routerLink]="['./', item.userId ]">
               <ion-avatar slot="start" name="avatar">
                 <img src="../assets/avatar.svg" />
               </ion-avatar>

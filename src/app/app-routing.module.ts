@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-import { TabsPage } from "src/app/tabs/tabs.page";
-import { UserTasksComponent } from "src/app/Components/user-tasks/user-tasks.component";
+ 
 const routes: Routes = [
   {
     path: "",
@@ -16,6 +15,7 @@ const routes: Routes = [
   
     ],
   },
+
 ];
 @NgModule({
   imports: [
