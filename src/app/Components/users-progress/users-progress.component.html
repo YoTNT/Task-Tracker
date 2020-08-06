@@ -54,8 +54,8 @@
 </ion-grid> -->
 
 <!-- List view  -->
-<ion-grid>
-  <ion-row>
+<ion-grid > 
+  <ion-row class="ion-no-margin ; no-padding">
     <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
       <ion-list>
         <ion-row
@@ -63,7 +63,7 @@
           style="justify-items: left;"
         >
           <ion-col>
-            <ion-item button [routerLink]="['./', item.userId]">
+            <ion-item  [routerLink]="['./', item.userId]">
               <ion-avatar slot="start" name="avatar">
                 <img src="../assets/avatar.svg" />
               </ion-avatar>
@@ -98,13 +98,15 @@
               color="primary"
               name="chatbox-ellipses-outline"
               style="
-                justify-self: flex-end;
+                flex:left;
                 margin-top: 10px;
                 margin-left: 5px;
                 margin-right: 5px;
+                width: 20px;
+                height: 20px;
               "
-              size="large"
-              class="ion-text-end"
+            
+              class="ion-text-start"
             ></ion-icon>
           </ion-col>
         </ion-row>
