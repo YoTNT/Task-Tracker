@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab3Page,
+  },
+  {
+    path: ':taskId',
+    loadChildren: () => import('./task-detial/task-detial.module').then( m => m.TaskDetialPageModule)
   }
 ];
 
