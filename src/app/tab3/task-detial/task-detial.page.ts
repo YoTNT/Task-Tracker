@@ -51,7 +51,7 @@ export class TaskDetialPage implements OnInit {
   }
 
   deleteTask(){
-    this.tasksService.deleteTask(this.loadedTask);
+    this.tasksService.deleteTask(this.loadedTask.id);
     this.navCtrl.navigateBack("/tabs/tab3");
     return;
   }

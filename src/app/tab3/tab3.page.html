@@ -10,7 +10,13 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" ion-text-center>
-        <ion-list>
+        <div *ngIf="isLoading" class="ion-text-center">
+          <ion-spinner color="primary"></ion-spinner>
+        </div>
+        <div class="ion-text-center" *ngIf="!isLoading && loadedTasks.length <= 0">
+          <P>You don't have any tasks.</P>
+        </div>
+        <ion-list *ngIf="!isLoading">
           <ion-item-sliding *ngFor="let tk of loadedTasks" #slidingItem>
             <ion-item [routerLink]="['/', 'tasktracker', 'submit-my-progress', tk.id ]">
               <ion-label>

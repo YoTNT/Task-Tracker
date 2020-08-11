@@ -50,7 +50,7 @@ export class TasksService {
     // For now, fetch all the task for the userId 0
     // TODO: change API later
     return this.httpClient.get<{[key: string]: TaskData}>(
-      `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?userid=0`)
+      `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?userid=${userId}`)
       .pipe(map(resData =>{
         const tasks = [];
         for(const key in resData){
@@ -131,10 +131,23 @@ export class TasksService {
     })
   }
 
-  deleteTask(task: Task){
+  deleteTask(taskId: string){
+    // FAKE DELETING FUNCTION
     // let index = this.myTasks.findIndex(item => item.id === task.id);
     // this.myTasks = this.myTasks.splice(index, 1);
     // console.log(this.myTasks);
+
+    
+    this.httpClient.delete(`https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?taskid=${taskId}`)
+      .pipe(
+        switchMap(() => {
+          return this.myTasks;
+        }),
+        take(1),
+        tap(tasks => {
+          this._myTasks.next(tasks.filter(t => t.id !== taskId));
+        })
+      )
   }
 
   constructor(private httpClient: HttpClient) { }

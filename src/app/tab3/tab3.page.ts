@@ -14,7 +14,7 @@ export class Tab3Page implements OnInit, OnDestroy{
 
   loadedTasks: Task[];
   private taskSub: Subscription;
-
+  isLoading = false;
   constructor(private tasksService: TasksService, private router: Router) {}
 
   ngOnInit(){
@@ -26,8 +26,13 @@ export class Tab3Page implements OnInit, OnDestroy{
   ionViewWillEnter(){
     // this.loadedTasks = this.tasksService.myTasks;
 
+    this.isLoading = true;
+
     // Testing
-    this.tasksService.fetchMyTasks('test').subscribe(); // Access API
+    // TODO: Need to pass the right userId into fetchMyTasks
+    this.tasksService.fetchMyTasks('0').subscribe(() => {
+      this.isLoading = false;
+    }); // Access API
   }
 
 
@@ -40,7 +45,7 @@ export class Tab3Page implements OnInit, OnDestroy{
 
   onDelete(task: Task, slidingItem: IonItemSliding){
     slidingItem.close();
-    this.tasksService.deleteTask(task);
+    this.tasksService.deleteTask(task.id);
   }
 
   ngOnDestroy(){
