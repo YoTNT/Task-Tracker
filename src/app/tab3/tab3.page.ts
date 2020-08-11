@@ -15,7 +15,6 @@ export class Tab3Page implements OnInit, OnDestroy{
   loadedTasks: Task[];
   private taskSub: Subscription;
   isLoading = false;
-
   constructor(private tasksService: TasksService, private router: Router) {}
 
   ngOnInit(){
