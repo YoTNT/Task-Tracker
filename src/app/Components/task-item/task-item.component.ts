@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Task } from 'src/app/Models/user-progress/task';
+import { Task } from '../../Models/task';
 
 @Component({
   selector: 'app-task-item',
