@@ -1,50 +1,119 @@
-<ion-content>
-  <ion-grid>
-    <ion-row *ngFor="let item of userProgress; let i = index">
-      <ion-col size-med="10" offset-med="1">
-        <ion-card
-          [ngStyle]="
-            i < userProgress?.length - 1
-              ? { 'margin-top': '-8px', 'margin-bottom': '3px' }
-              : { 'margin-top': '-8px', 'margin-bottom': '30%' }
-          "
-        >
-          <ion-card-header>
-            <ion-title
-              size="medium"
-              style="text-align: left; padding-left: 40px;"
-              color="primary"
-            >
-              <b> {{ item.userName }}</b>
-            </ion-title>
-
-            <ion-badge
-              [color]="
-                item.progress > 99
-                  ? 'success'
-                  : item.progress < 50
-                  ? 'warning'
-                  : 'primary'
-              "
-              style="float: right;"
-            >
-              {{ item.progress }}%
-            </ion-badge>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-item button (click)="presentPopover()">
-              Total Tasks &nbsp;
-              <ion-title color="secondary">
-                <b> ({{ item.totaltasks }})</b></ion-title
+<!-- Card view  -->
+<!-- <ion-grid>
+  <ion-row *ngFor="let item of userProgress; let i = index">
+    <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
+      <ion-card class="ion-no-margin">
+        <ion-col>
+          <ion-img> </ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <ion-col style="float: left;">
+              <ion-label
+                color="primary"
+                class="ion-text-start ion-text-capitalize"
               >
+                {{ item.userName }}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label (click)="presentPopover()" color="medium">
+                Total Tasks
+              </ion-label>
+              <ion-label color="dark"> ({{ item.totaltasks }}) </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-badge
+                [color]="
+                  item.progress > 99
+                    ? 'success'
+                    : item.progress < 50
+                    ? 'warning'
+                    : 'primary'
+                "
+              >
+                {{ item.progress }}%
+              </ion-badge>
+            </ion-col>
+            <ion-col>
+              <ion-icon
+                name="chatbox-ellipses-outline"
+                style="float: right;"
+                size="large"
+                class="ion-text-end"
+              >
+              </ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid> -->
+
+<!-- List view  -->
+<ion-grid > 
+  <ion-row class="ion-no-margin ; no-padding">
+    <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
+      <ion-list>
+        <ion-row
+          *ngFor="let item of userProgress; let i = index"
+          style="justify-items: left;"
+        >
+          <ion-col>
+            <ion-item  [routerLink]="['./', item.userId]">
+              <ion-avatar slot="start" name="avatar">
+                <img src="../assets/avatar.svg" />
+              </ion-avatar>
+              <ion-label class="ion-text-start ion-text-capitalize">
+                <ion-label color="primary" mode="ios" position="stacked">
+                  <b>{{ item.userName }}</b></ion-label
+                >
+
+                <ion-label mode="ios" position="stacked">
+                  Total Tasks <b>({{ item.totaltasks }}) </b>
+                </ion-label>
+                <ion-label mode="ios" position="stacked">
+                  <ion-badge
+                    style="margin: 0px;"
+                    [color]="
+                      item.avgProgress > 99
+                        ? 'success'
+                        : item.avgProgress < 50
+                        ? 'warning'
+                        : 'primary'
+                    "
+                  >
+                    {{ item.avgProgress }}%
+                  </ion-badge>
+                </ion-label>
+              </ion-label>
             </ion-item>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
-<!-- <ion-content>
+          </ion-col>
+
+          <ion-col size="auto">
+            <ion-icon
+              color="primary"
+              name="chatbox-ellipses-outline"
+              style="
+                flex:left;
+                margin-top: 10px;
+                margin-left: 5px;
+                margin-right: 5px;
+                width: 20px;
+                height: 20px;
+              "
+            
+              class="ion-text-start"
+            ></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-content>
   <ion-grid>
     <ion-row *ngFor="let item of userProgress">
       <ion-col size-med="10" offset-med="1">
@@ -71,3 +140,4 @@
     </ion-row>
   </ion-grid>
 </ion-content> -->
+</ion-grid>
