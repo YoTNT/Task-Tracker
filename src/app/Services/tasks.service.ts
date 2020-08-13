@@ -64,11 +64,12 @@ export class TasksService {
             if (resData.hasOwnProperty(key)) {
               tasks.push(
                 new Task(
-                  resData[key].id,
                   resData[key].task,
+                  resData[key].id,
+                  resData[key].taskdate,
                   resData[key].details,
-                  parseFloat(resData[key].progress) * 0.01,
-                  resData[key].taskdate
+                  resData[key].userid,
+                  parseFloat(resData[key].progress) > 1 ?  parseFloat(resData[key].progress)*0.01 : parseFloat(resData[key].progress)
                 )
               );
             }
@@ -89,11 +90,12 @@ export class TasksService {
       .pipe(
         map((taskData) => {
           return new Task(
-            id,
             taskData.task,
+            id,
+            taskData.taskdate,
             taskData.details,
-            parseFloat(taskData.progress) * 0.01,
-            taskData.taskdate
+            taskData.userid,
+            parseFloat(taskData.progress)
           );
         })
       );
@@ -108,9 +110,10 @@ export class TasksService {
     // this.myTasks[index] = task;
     console.log("Receiving update task: ", task);
     const taskId = task.id;
-    const taskName = task.taskName;
-    const taskDesc = task.taskDesc;
+    const taskName = task.task;
+    const taskDesc = task.details;
     const taskProgress = task.progress;
+    const taskUserId = task.userid;
 
     let updatedTasks: Task[];
 
@@ -132,16 +135,18 @@ export class TasksService {
           updatedTasks = [...tasks];
           const oldTask = updatedTasks[updatedTaskIndex];
           updatedTasks[updatedTaskIndex] = new Task(
-            oldTask.id,
             taskName,
+            oldTask.id,
+            new Date().toString(),
             taskDesc,
-            taskProgress,
-            new Date().toString()
+            taskUserId,
+            taskProgress
           );
           console.log("Sending update request to the server: ", updatedTasks[updatedTaskIndex]);
           return this.httpClient.put(
                     `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task`,
-                    { ...updatedTasks[updatedTaskIndex] }
+                    // { ...updatedTasks[updatedTaskIndex] }
+                    task
                   );
       }),
       tap(() => {
