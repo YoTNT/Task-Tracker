@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserProgress } from 'src/app/Models/user-progress/user-progress';
+import { UserProgress } from 'src/app/Models/user-progress';
 import { DataService  } from 'src/app/Services/data-service.service';
 import { PopoverController } from '@ionic/angular';
-import { UserTasksPage } from '../user-tasks/user-tasks.page';
+import { UserTasksPage } from '../../Pages/user-tasks/user-tasks.page';
 @Component({
   selector: 'app-users-progress',
   templateUrl: './users-progress.component.html',

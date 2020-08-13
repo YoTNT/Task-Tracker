@@ -9,9 +9,9 @@ const routes: Routes = [
   },
   {
     path: "tasktracker",
-    //loadChildren: () =>import("./tabs/tabs.module").then((m) => m.TabsPageModule),
+ //loadChildren: () =>import("./Pages/tabs/tabs.module").then((m) => m.TabsPageModule),
     children: [
-      { path: "", loadChildren: "./tabs/tabs.module#TabsPageModule" },
+      { path: "", loadChildren: "./Pages/tabs/tabs.module#TabsPageModule" },
   
     ],
   },

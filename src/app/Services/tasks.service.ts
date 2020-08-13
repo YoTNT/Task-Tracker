@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Task } from '../Models/task';
-import { HttpClient } from '@angular/common/http';
-import { map, tap, take, switchMap } from 'rxjs/operators';
-import { BehaviorSubject, of } from 'rxjs';
+import { Injectable, ErrorHandler } from "@angular/core";
+import { Task } from "../Models/task";
+import { HttpClient } from "@angular/common/http";
+import { map, tap, take, switchMap, catchError } from "rxjs/operators";
+import { BehaviorSubject, of, throwError } from "rxjs";
+import { User } from '../Models/user';
 
-interface TaskData{
+interface TaskData {
   task: string;
   details: string;
   id: string;
@@ -14,10 +15,9 @@ interface TaskData{
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class TasksService {
-
   // myTasks: Task[] = [
   //   new Task(
   //     't1',
@@ -40,115 +40,178 @@ export class TasksService {
   // ];
 
   private _myTasks = new BehaviorSubject<Task[]>([]);
-  
-  get myTasks(){
+  loginedUser = new User(
+    '0',
+    'Testing User'
+  );
+
+  get myTasks() {
     return this._myTasks.asObservable();
   }
 
-  // API Access
-  fetchMyTasks(userId: string){
+  // API Access // Get all user tasks 
+  fetchMyTasks(userId: string) {
     // For now, fetch all the task for the userId 0
     // TODO: change API later
-    return this.httpClient.get<{[key: string]: TaskData}>(
-      `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?userid=${userId}`)
-      .pipe(map(resData =>{
-        const tasks = [];
-        for(const key in resData){
-          if(resData.hasOwnProperty(key)){
-            tasks.push(
-              new Task(
-                resData[key].id,
-                resData[key].task,
-                resData[key].details,
-                parseFloat(resData[key].progress)*0.01
-              )
-            )
+    return this.httpClient
+      .get<{ [key: string]: TaskData }>(
+        `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?userid=${userId}`
+      )
+      .pipe(
+        map((resData) => {
+          const tasks = [];
+          for (const key in resData) {
+            if (resData.hasOwnProperty(key)) {
+              tasks.push(
+                new Task(
+                  resData[key].task,
+                  resData[key].id,
+                  resData[key].taskdate,
+                  resData[key].details,
+                  resData[key].userid,
+                  parseFloat(resData[key].progress) > 1 ?  parseFloat(resData[key].progress)*0.01 : parseFloat(resData[key].progress)
+                )
+              );
+            }
           }
-        }
-        return tasks;
-      }),
-      tap(tasks =>{
-        this._myTasks.next(tasks)
-      })
+          return tasks.sort((a, b) =>Date.parse(b.taskdate)  - Date.parse(a.taskdate)) ; // order by date DESC
+        }),
+        tap((tasks) => {
+          this._myTasks.next(tasks)
+        })
       );
   }
 
-  getTask(id: string){
-    return this.httpClient.get<TaskData>(`https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?taskid=${id}`)
-    .pipe(
-      map(
-        taskData => {
+  getTask(id: string) {
+    return this.httpClient
+      .get<TaskData>(
+        `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?taskid=${id}`
+      )
+      .pipe(
+        map((taskData) => {
           return new Task(
-            id,
             taskData.task,
+            id,
+            taskData.taskdate,
             taskData.details,
-            parseFloat(taskData.progress)*0.01
-          )
-      })
-    )
+            taskData.userid,
+            parseFloat(taskData.progress)
+          );
+        })
+      );
   }
 
-  getMyTasks(id: string){
+  getMyTasks(id: string) {
     // return {...this.myTasks.find(p => p.id === id)};
   }
 
-  updateTask(task: Task){
+  addTask(taskTitle: string, taskDescription: string){
+    console.log("Trying to create task with title: ", taskTitle, " and description: ", taskDescription);
+    const currentUserId = this.loginedUser.userId;
+
+    const newTask = Object.create(Task);
+    newTask.task = taskTitle;
+    newTask.id = null;
+    newTask.taskdate = new Date().toISOString;
+    newTask.details = taskDescription;
+    newTask.userid = currentUserId;
+    newTask.progress = "101%";
+
+    console.log("Create new task target: ", newTask);
+
+    return this.httpClient
+      .post<{ taskid: string}>(
+        'https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task',
+        newTask
+      )
+      .pipe(
+        switchMap(resData => {
+          newTask.id = resData.taskid;
+          return this.myTasks;
+        }),
+        take(1),
+        tap(tasks => {
+          this._myTasks.next(tasks.concat(newTask));
+        })
+      );
+  }
+
+  updateTask(task: Task) {
     // let index = this.myTasks.findIndex(item => item.id === task.id);
     // this.myTasks[index] = task;
+    console.log("Receiving update task: ", task);
     const taskId = task.id;
-    const taskName = task.taskName;
-    const taskDesc = task.taskDesc;
+    const taskName = task.task;
+    const taskDesc = task.details;
     const taskProgress = task.progress;
+    const taskUserId = task.userid;
 
     let updatedTasks: Task[];
+
+    console.log("Start updating the task with ID: ", taskId);
 
     return this.myTasks.pipe(
       take(1),
       switchMap(tasks => {
-        if(!tasks || tasks.length <= 0){
-          return this.fetchMyTasks('0');   // TODO: This userId must be gotten from user service later
-        }
-        else{
+        if (!tasks || tasks.length <= 0) {
+          console.log("The list is empty");
+          return this.fetchMyTasks(this.loginedUser.userId); // TODO: This userId must be gotten from user service later
+        } else {
           return of(tasks);
         }
       }),
       switchMap(tasks => {
-        const updatedTaskIndex = tasks.findIndex(tk => tk.id === taskId);
-        updatedTasks = [...tasks];
-        const oldTask = updatedTasks[updatedTaskIndex];
-        updatedTasks[updatedTaskIndex] = new Task(
-          oldTask.id,
-          taskName,
-          taskDesc,
-          taskProgress
-        );
-        return this.httpClient.put(`https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?taskid=${taskId}`,
-        {...updatedTasks[updatedTaskIndex]});  // ? id: null
+        console.log("Start mapping obejct between task and")
+          const updatedTaskIndex = tasks.findIndex((tk) => tk.id === taskId);
+          updatedTasks = [...tasks];
+          const oldTask = updatedTasks[updatedTaskIndex];
+          updatedTasks[updatedTaskIndex] = new Task(
+            taskName,
+            oldTask.id,
+            new Date().toString(),
+            taskDesc,
+            taskUserId,
+            taskProgress
+          );
+          console.log("Sending update request to the server: ", updatedTasks[updatedTaskIndex]);
+          return this.httpClient.put(
+                    `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task`,
+                    // { ...updatedTasks[updatedTaskIndex] }
+                    task
+                  );
+      }),
+      tap(() => {
+        console.log("Updating Reqeust Completed!");
+        this._myTasks.next(updatedTasks);
       })
-    ),
-    tap(() => {
-      this._myTasks.next(updatedTasks);
-    })
+    );
   }
 
-  deleteTask(taskId: string){
-    // FAKE DELETING FUNCTION
-    // let index = this.myTasks.findIndex(item => item.id === task.id);
-    // this.myTasks = this.myTasks.splice(index, 1);
-    // console.log(this.myTasks);
+  deleteTask(taskId: string) {
+    let taskTemp = Object.create(Task);
+    taskTemp.id = taskId;
 
-    
-    this.httpClient.delete(`https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?taskid=${taskId}`)
+    console.log("Sending delete request to server with task ID: ", taskTemp.id);
+
+    return this.httpClient
+      .delete(
+        "https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task",
+       taskTemp
+      )
       .pipe(
+        catchError(err => {
+          console.log('Handling error locally and rethrowing it...', err);
+          return throwError(err);
+        }),
         switchMap(() => {
           return this.myTasks;
         }),
         take(1),
         tap(tasks => {
-          this._myTasks.next(tasks.filter(t => t.id !== taskId));
+          this._myTasks.next(tasks.filter((t) => t.id !== taskId));
         })
-      )
+      );
   }
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 }

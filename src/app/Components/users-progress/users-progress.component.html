@@ -79,14 +79,14 @@
                   <ion-badge
                     style="margin: 0px;"
                     [color]="
-                      item.progress > 99
+                      item.avgProgress > 99
                         ? 'success'
-                        : item.progress < 50
+                        : item.avgProgress < 50
                         ? 'warning'
                         : 'primary'
                     "
                   >
-                    {{ item.progress }}%
+                    {{ item.avgProgress }}%
                   </ion-badge>
                 </ion-label>
               </ion-label>

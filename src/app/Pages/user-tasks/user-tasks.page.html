@@ -1,10 +1,3 @@
-<ion-list [routerLink]="['/', 'tabs', 'tab3', task.id]">
-  <ion-card-header>
-    <ion-card-title>{{ task.taskName }}</ion-card-title>
-    <ion-card-subtitle>Progress: {{ task.progress }}</ion-card-subtitle>
-  </ion-card-header>
-</ion-list>
-
 <ion-content>
   <ion-grid no-padding ion-no-margin>
     <ion-row>
@@ -12,34 +5,38 @@
         <ion-row>
           <ion-col size="12">
             <ion-item>
+              <ion-buttons slot="start"  >
+                <ion-back-button
+                  text=""
+           
+                  defaultHref="/users-progress"
+                ></ion-back-button>
+              </ion-buttons>
+
+              <ion-label slot="" color="primary">
+                <b> {{user.userName}}</b>
+              </ion-label>
               <ion-avatar slot="start" name="avatar">
                 <img src="../assets/avatar.svg" />
               </ion-avatar>
-              <ion-label slot="" color="primary">
-                <b> {{ user.userName }}</b>
-              </ion-label>
             </ion-item>
-          </ion-col> </ion-row>
-        <ion-row>
+          </ion-col> </ion-row
+        ><ion-row>
           <ion-col size="auto">
             <ion-chip outline color="primary">
-              <ion-label>
-                Tasks <b>({{ userProgress.length }}) </b></ion-label
-              >
+              <ion-label> Tasks <b>({{userProgress.length}}) </b></ion-label>
             </ion-chip>
           </ion-col>
-          <ion-col size="auto">
-            <ion-chip outline color="warning">
+          <ion-col size="auto"  >
+            <ion-chip outline color="warning"  >
               <ion-label>
-                In-Progress <b>({{ getTotalInProgress() }}) </b>
+                In-Progress <b>({{getTotalInProgress()}}) </b>
               </ion-label>
             </ion-chip>
           </ion-col>
           <ion-col size="auto">
             <ion-chip outline color="success">
-              <ion-label>
-                Done <b>({{ getTotalCompleted() }}) </b>
-              </ion-label>
+              <ion-label> Done <b>({{getTotalCompleted()}}) </b> </ion-label>
             </ion-chip>
           </ion-col>
         </ion-row>
@@ -53,19 +50,17 @@
                 <ion-label
                   class="ion-text-start ion-text-capitalize ion-text-wrap"
                 >
-                  <h3>
-                    <b> {{ i + 1 }}- </b>{{ item.taskName }}
-                  </h3>
+                  <h3><b> {{i+1}}- </b>{{ item.taskName }}</h3>
                 </ion-label>
 
                 <ion-badge
                   [color]="
-                    item.progress > 99
-                      ? 'success'
-                      : item.progress < 50
-                      ? 'warning'
-                      : 'primary'
-                  "
+                      item.progress > 99
+                        ? 'success'
+                        : item.progress < 50
+                        ? 'warning'
+                        : 'primary'
+                    "
                 >
                   {{ item.progress }}%
                 </ion-badge>
