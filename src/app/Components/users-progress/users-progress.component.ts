@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserProgress } from 'src/app/Models/user-progress/user-progress';
+import { UserProgress } from 'src/app/Models/user-progress';
 import { DataService  } from 'src/app/Services/data-service.service';
 import { PopoverController } from '@ionic/angular';
-import { UserTasksComponent } from '../user-tasks/user-tasks.component';
+import { UserTasksPage } from '../../Pages/user-tasks/user-tasks.page';
 @Component({
   selector: 'app-users-progress',
   templateUrl: './users-progress.component.html',
@@ -19,7 +19,7 @@ export class UsersProgressComponent implements OnInit {
   }
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
-      component: UserTasksComponent,
+      component: UserTasksPage,
       cssClass: 'my-custom-class',
       event: ev,
       translucent: true

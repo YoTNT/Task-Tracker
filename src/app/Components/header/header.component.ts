@@ -13,10 +13,10 @@ export class HeaderComponent implements OnInit {
   public currentDateTime: any = moment().format("MM-DD-YYYY HH:mm:ss");
  
   ngOnInit(): void {
-    setInterval(() => {
-      this.currentDateTime = moment().format("MM-DD-YYYY HH:mm:ss");
-   //   console.log(this.currentDateTime);
-    }, 1000);
+  //   setInterval(() => {
+  //     this.currentDateTime = moment().format("MM-DD-YYYY HH:mm:ss");
+  //  //   console.log(this.currentDateTime);
+  //   }, 1000);
   }
 
 }
