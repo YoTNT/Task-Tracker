@@ -59,7 +59,7 @@ export class TaskDetialPage implements OnInit {
           text: 'Delete',
           cssClass: 'primary',
           handler: () => {
-            this.tasksService.deleteTask(this.loadedTask.id).subscribe();
+            this.tasksService.deleteTask(this.loadedTask).subscribe();
             this.navCtrl.navigateBack("/tasktracker/submit-my-progress");
             return;
           }
@@ -68,7 +68,7 @@ export class TaskDetialPage implements OnInit {
     });
     await alert.present();
   }
-  
+
   // Update MyTask list from API
   onViewWillEnter(){
     this.tasksService.fetchMyTasks(this.tasksService.loginedUser.userId); // TODO: This should be the actual current login user

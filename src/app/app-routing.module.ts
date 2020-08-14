@@ -15,7 +15,10 @@ const routes: Routes = [
   
     ],
   },
-
+  {
+    path: 'create-task',
+    loadChildren: () => import('./Components/create-task/create-task.module').then( m => m.CreateTaskPageModule)
+  }
 ];
 @NgModule({
   imports: [

@@ -5,6 +5,7 @@ import { TasksService } from '../../Services/tasks.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NewTaskComponent } from 'src/app/Components/new-task/new-task.component';
+import { CreateTaskPage } from 'src/app/Components/create-task/create-task.page';
 
 @Component({
   selector: 'app-tab3',
@@ -51,7 +52,7 @@ export class Tab3Page implements OnInit, OnDestroy{
   openNewTaskModal(){
     this.modalCtrl
       .create({
-        component: NewTaskComponent,
+        component: CreateTaskPage,
       })
       .then(modalElement => {
         modalElement.present();
@@ -64,7 +65,7 @@ export class Tab3Page implements OnInit, OnDestroy{
 
   onDelete(task: Task, slidingItem: IonItemSliding){
     slidingItem.close();
-    this.tasksService.deleteTask(task.id);
+    this.tasksService.deleteTask(task);
   }
 
   ngOnDestroy(){

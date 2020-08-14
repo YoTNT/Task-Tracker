@@ -18,26 +18,6 @@ interface TaskData {
   providedIn: "root",
 })
 export class TasksService {
-  // myTasks: Task[] = [
-  //   new Task(
-  //     't1',
-  //     'Test 1',
-  //     'Test Desc 1',
-  //     0.5
-  //   ),
-  //   new Task(
-  //     't2',
-  //     'Test 2',
-  //     'Test Desc 2',
-  //     0.25
-  //   ),
-  //   new Task(
-  //     't3',
-  //     'Test 3',
-  //     'Test Desc 3',
-  //     0.85
-  //   )
-  // ];
 
   private _myTasks = new BehaviorSubject<Task[]>([]);
   loginedUser = new User(
@@ -101,10 +81,6 @@ export class TasksService {
       );
   }
 
-  getMyTasks(id: string) {
-    // return {...this.myTasks.find(p => p.id === id)};
-  }
-
   addTask(taskTitle: string, taskDescription: string){
     console.log("Trying to create task with title: ", taskTitle, " and description: ", taskDescription);
     const currentUserId = this.loginedUser.userId;
@@ -112,10 +88,10 @@ export class TasksService {
     const newTask = Object.create(Task);
     newTask.task = taskTitle;
     newTask.id = null;
-    newTask.taskdate = new Date().toISOString;
+    newTask.taskdate = (new Date()).toISOString().substring(0, 10);
     newTask.details = taskDescription;
     newTask.userid = currentUserId;
-    newTask.progress = "101%";
+    newTask.progress = "0";
 
     console.log("Create new task target: ", newTask);
 
@@ -187,17 +163,11 @@ export class TasksService {
     );
   }
 
-  deleteTask(taskId: string) {
-    let taskTemp = Object.create(Task);
-    taskTemp.id = taskId;
-
-    console.log("Sending delete request to server with task ID: ", taskTemp.id);
+  deleteTask(task: Task) {
+    console.log("Sending delete request to server with task ID: ", task.id);
 
     return this.httpClient
-      .delete(
-        "https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task",
-       taskTemp
-      )
+      .delete<any>(`https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task?id=${task.id}`)
       .pipe(
         catchError(err => {
           console.log('Handling error locally and rethrowing it...', err);
@@ -208,7 +178,7 @@ export class TasksService {
         }),
         take(1),
         tap(tasks => {
-          this._myTasks.next(tasks.filter((t) => t.id !== taskId));
+          this._myTasks.next(tasks.filter((t) => t.id !== task.id));
         })
       );
   }

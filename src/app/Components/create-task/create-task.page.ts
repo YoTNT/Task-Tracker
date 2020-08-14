@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { TasksService } from 'src/app/Services/tasks.service';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Task } from 'src/app/Models/task';
 
 @Component({
-  selector: 'app-new-task',
-  templateUrl: './new-task.component.html',
-  styleUrls: ['./new-task.component.scss'],
+  selector: 'app-create-task',
+  templateUrl: './create-task.page.html',
+  styleUrls: ['./create-task.page.scss'],
 })
-export class NewTaskComponent implements OnInit {
-
+export class CreateTaskPage implements OnInit {
+  
   form: FormGroup;
 
   constructor(
@@ -38,9 +37,8 @@ export class NewTaskComponent implements OnInit {
 
   onCreateTask(){
     console.log("New-Task Page From FORM: ", this.form.value.title, this.form.value.description);
-    // this.tasksService.addTask(this.form.value.title, this.form.value.description).subscribe();
+    this.tasksService.addTask(this.form.value.title, this.form.value.description).subscribe();
     this.form.reset();
-    // this.modalCtrl.dismiss(null, 'task created');
+    this.modalCtrl.dismiss(null, 'task created');
   }
 }
- 
