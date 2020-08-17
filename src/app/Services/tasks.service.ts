@@ -4,6 +4,8 @@ import { HttpClient } from "@angular/common/http";
 import { map, tap, take, switchMap, catchError } from "rxjs/operators";
 import { BehaviorSubject, of, throwError } from "rxjs";
 import { User } from '../Models/user';
+import { AuthService } from './authService.service';
+import { Router } from '@angular/router';
 
 interface TaskData {
   task: string;
@@ -20,10 +22,7 @@ interface TaskData {
 export class TasksService {
 
   private _myTasks = new BehaviorSubject<Task[]>([]);
-  loginedUser = new User(
-    '0',
-    'Testing User'
-  );
+  loginedUser = new User();
 
   get myTasks() {
     return this._myTasks.asObservable();
@@ -183,5 +182,18 @@ export class TasksService {
       );
   }
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private auth: AuthService,
+    private router: Router
+    ) {
+      if(auth.isLoggedIn()){
+        this.loginedUser = this.auth.getAuthenticatedUser();
+        console.log("Constr: ", this.loginedUser);
+      }
+      else{
+        this.router.navigate(['/']);
+        return;
+      }
+    }
 }

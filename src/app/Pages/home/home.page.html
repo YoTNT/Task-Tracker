@@ -1,0 +1,64 @@
+<ion-header style=" text-align: center !important">
+  <ion-toolbar>
+    <ion-chip
+      outline
+      color="secondary"
+
+ 
+    >
+      <b style="margin: 20px; font-size: medium; float: inline-start;"
+        >LTI Task Tracker</b
+      >
+    </ion-chip>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content fullscreen >
+  <!-- <ion-chip outline color="warning"  class="ion-margin ion-padding">   <ion-label  [(ngModel)]="currentTime">
+    <span >
+      {{currentDate}}  
+    </span>
+    <span> - {{currentTime}}</span> 
+  </ion-label> </ion-chip> -->
+  <!-- <router-outlet></router-outlet> -->
+  <ion-segment color="medium">
+    <ion-segment-button>
+      <ion-label color="warning" name="lbldate" #lbldate>
+        {{currentDate}}
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button>
+      <ion-label       ngDefaultControl
+        color="primary"
+        [(ngModel)]="currentTime"
+        name="lbltime"
+        #lbltime
+        >{{currentTime}}</ion-label
+      >
+    </ion-segment-button>
+  </ion-segment>
+</ion-content>
+<ion-footer class="ion-no-border ion-justify-content-center" style=" text-align: center !important">
+  <!-- <ion-grid> 
+    <ion-row class="ion-justify-content-center">
+      <ion-col style="  text-align: center !important;">
+        <ion-toolbar>
+        <ion-button>
+          <ion-icon slot="icon-only" name="person-circle"></ion-icon> SignIn
+        </ion-button>
+        </ion-toolbar>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  <ion-toolbar  >
+    <ion-button 
+      color="primary"
+      style="width: 180px;align-items: center !important;"
+      class="ion-margin ion-text-capitalize"
+      (click)="openlogin()"
+    >
+      <ion-icon slot="start" name="lock-open-outline"></ion-icon> SignIn
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,130 @@
+<!-- <ion-header>
+  <ion-toolbar lines="full" class="ion-no-margin ion-no-padding">
+    <ion-title
+      ><ion-label class="" position="stacked" color="primary">
+        Welcome to Task Tracker
+      </ion-label></ion-title
+    >
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="">
+      <ion-col
+        size-xs="12"
+        size-sm="12"
+        size-med="3"
+        size-lg="3"
+        offset-med="4"
+        offset-lg="4"
+      >
+        <ion-card>
+          <ion-row class="ion-justify-content-center">
+            <ion-col
+              size="auto"
+              style="text-align: center !important;"
+              style="height: 80px;"
+            >
+              <ion-avatar name="avatar" class="ion-no-padding ion-margin">
+                <img src="../assets/images/avatar.svg" />
+              </ion-avatar>
+            </ion-col>
+
+            <!-- ion-float-left ion-float-start -->
+            <!-- <ion-col
+              size="12"
+              *ngIf="true"
+              size="10"
+              style="margin-top: 9px;"
+              class="ion-margin-left ion-margin-right"
+            >
+              <ion-chip
+                outline
+                class="ion-justify-content-center"
+                style="width: 90%;"
+              >
+                <ion-label class="" color="secondary"
+                  >Login with LTI Email</ion-label
+                >
+              </ion-chip>
+            </ion-col> -->
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">
+                  Email <ion-text color="danger">*</ion-text></ion-label
+                >
+                <ion-input
+                  type="email"
+                  required
+                  #txtemail
+                  id="txtemail"
+                  [(ngModel)]="email"
+                  style="font-size: small;"
+                ></ion-input
+              ></ion-item>
+              <ion-item>
+                <ion-label
+                  position="floating"
+                  color="medium"
+                  aria-setsize="small"
+                  >Password <ion-text color="danger">*</ion-text></ion-label
+                >
+                <ion-input
+                  type="password"
+                  #txtpass
+                  id="txtpass"
+                  [(ngModel)]="pass"
+                  required
+                ></ion-input
+              ></ion-item>
+              <ion-item>
+                <ion-checkbox color="primary" position="fixed"></ion-checkbox>
+                <ion-label color="primary" mode="md" style="padding-left: 4px;"
+                  ><h3>Remember My Credentials</h3>
+                </ion-label>
+              </ion-item>
+              <div
+                class="ion-padding ion-no-margin"
+                style="text-align: center !important; height:100px;"
+              >
+                <div style="height:8px;  text-align: center !important;">
+                  <ion-spinner style="position: relative;"   *ngIf="loading" name="dots"></ion-spinner>
+                </div>
+
+                <ion-button
+                  [disabled]=" loading "
+                  expand="block"
+                  type="button"
+                  (click)="signIn()"
+                  class="ion-margin"
+                  >login</ion-button
+                >
+              </div>
+              <div
+                *ngIf="message"
+                class="ion-no-padding ion-margin-bottom ion-margin-horizontal"
+              >
+                <ion-chip
+                  [color]="
+                messageType == 1
+                  ? 'success'
+                  : messageType == 2
+                  ? 'warning'
+                  : 'danger'
+              "
+                  class="ion-justify-content-center"
+                  style="width: 98%;"
+                >
+                  <ion-label> {{message}}</ion-label>
+                </ion-chip>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,27 +1,64 @@
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
-</ion-content> -->
+<!--  
 <ion-header class="ion-no-margin">
   <ion-toolbar>
-    <ion-icon name="share-outline" color="primary" size="large" slot="start"></ion-icon>
-    <ion-label slot="start" color="primary"  >Submit My Progress</ion-label>
+    <ion-icon
+      name="bar-chart-outline"
+      color="primary"
+      size="large"
+      slot="start"
+      style="width: 24px !important;height: 24px !important;margin-right: 5px;margin-left: 5px;"
+    ></ion-icon>
+    <ion-label slot="start" color="primary"><p> Reports</p> </ion-label>
   </ion-toolbar>
-  <!-- <ion-searchbar showCancelButton="focus"  value=" " placeholder="Filter users"></ion-searchbar> -->
+
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-no-margin;no-padding">
-   
+</ion-content> -->
+
+<ion-header class="ion-no-margin">
+  <ion-toolbar>
+    <ion-icon
+      name="bar-chart-outline"
+      color="primary"
+      size="large"
+      slot="start"
+      style="
+        width: 24px !important;
+        height: 24px !important;
+        margin-right: 5px;
+        margin-left: 5px;
+      "
+    ></ion-icon>
+    <ion-label slot="start" color="primary"><p>Reports</p> </ion-label>
  
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding ion-no-margin>
+    <ion-row>
+      <ion-col size="12" size-lg="6" size-md="6" offset-med="3" offset-lg="3">
+        <ion-row style="justify-items: left;">
+          <ion-col>
+            <ion-list>
+              <ion-item detail="true" routerLink="./1" >
+             
+
+                <ion-thumbnail slot="start">
+                  <ion-img  src ="../assets/images/color-pie-chart.svg"></ion-img>
+                </ion-thumbnail>
+
+                <ion-label color="primary" position="fixed"
+                  class="ion-text-start ion-text-capitalize ion-text-wrap"
+                >
+                  <p>Users Progress Pie-Chart</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
