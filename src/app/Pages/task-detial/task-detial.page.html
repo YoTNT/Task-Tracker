@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/tab3"     text=""></ion-back-button>
+      <ion-back-button defaultHref="/tabs/tab3" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title size="small" color="primary" > <h4> Update My Progress</h4></ion-title>
+    <ion-title size="small" color="primary"><p>My Tasks</p> </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="deleteTask()">
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
@@ -37,29 +37,30 @@
 </ion-content> -->
 
 <!-- Card view  -->
-  <ion-content fullscreen>
+<ion-content fullscreen>
   <ion-grid>
     <ion-row>
       <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
-     
         <ion-list lines="full" class="ion-no-margin ion-no-padding">
           <ion-item>
             <ion-label position="stacked" color="primary"
               >Task Title <ion-text color="danger">*</ion-text></ion-label
             >
-            <ion-input style="background-color:transparent;"
+            <ion-input
+              style="background-color: transparent;"
               required
               type="text"
               [(ngModel)]="loadedTask.task"
               (focusout)="updateTask()"
             ></ion-input>
           </ion-item>
-    
+
           <ion-item>
             <ion-label position="stacked" color="primary"
               >Progress % <ion-text color="danger">*</ion-text></ion-label
             >
-            <ion-input  style="background-color:transparent;"
+            <ion-input
+              style="background-color: transparent;"
               required
               type="number"
               [(ngModel)]="loadedTask.progress"
@@ -67,21 +68,25 @@
             ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked" color="primary">Description</ion-label>
-            <ion-textarea  rows="20" cols="20"    style="background-color:transparent " [(ngModel)]="loadedTask.details"
-            (focusout)="updateTask()"></ion-textarea>
+            <ion-label position="stacked" color="primary"
+              >Description</ion-label
+            >
+            <ion-textarea
+              rows="20"
+              cols="20"
+              style="background-color: transparent;"
+              [(ngModel)]="loadedTask.details"
+              (focusout)="updateTask()"
+            ></ion-textarea>
           </ion-item>
         </ion-list>
-<!--     
+        <!--     
         <div class="ion-padding">
           <ion-button expand="block" type="submit" class="ion-no-margin"
             >Save</ion-button
           >
         </div> -->
-
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>  
- 
- 
+</ion-content>

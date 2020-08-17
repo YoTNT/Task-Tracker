@@ -7,6 +7,12 @@ const routes: Routes = [
     path: '',
     component: Tab2Page,
   }
+  ,
+  {
+    path: ":repid",
+    loadChildren: () =>
+      import("../../Pages/report/report.module").then((m) => m.ReportPageModule),
+  },
 ];
 
 @NgModule({

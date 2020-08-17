@@ -5,8 +5,9 @@
       color="primary"
       size="large"
       slot="start"
+      style="width: 24px !important;height: 24px !important;margin-right: 5px;margin-left: 5px;"
     ></ion-icon>
-    <ion-label slot="start" color="primary"> My Task List </ion-label>
+    <ion-label slot="start" color="primary"> <p>My Tasks</p></ion-label>
 
     <ion-buttons slot="end">
       <!-- <ion-button [routerLink]="['/', 'tasktracker', 'submit-my-progress', 'new']"> -->
@@ -16,7 +17,17 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid no-padding ion-no-margin>
     <ion-row>
       <ion-col
@@ -31,11 +42,20 @@
         </div>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="!isLoading && loadedTasks.length <= 0">
+    <ion-row *ngIf="!isLoading && loadedTasks.length <= 0 && !isLoadingError">
       <ion-col size="12" size-lg="6" offset-med="3" offset-lg="3">
         <ion-chip class="ion-text-center" outline color="danger">
           <ion-label>
             <b>You don't have any assigend tasks </b>
+          </ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="isLoadingError && !isRefreshing">
+      <ion-col size="12" size-lg="6" offset-med="3" offset-lg="3">
+        <ion-chip class="ion-text-center" outline color="danger">
+          <ion-label>
+            <b>Can not access data. Please try later.</b>
           </ion-label>
         </ion-chip>
       </ion-col>
@@ -67,7 +87,7 @@
             <ion-col>
               <ion-item-sliding #slidingItem>
                 <ion-item
-                  [routerLink]="['/', 'tasktracker', 'submit-my-progress', tk.id ]"
+                  [routerLink]="['/', 'tasktracker', 'mytasks', tk.id ]"
                 >
                   <ion-label
                     class="ion-text-start ion-text-capitalize ion-text-wrap"
@@ -90,7 +110,6 @@
                     >
                       {{ tk.progress | percent}}
                     </ion-badge>
-                
                   </ion-label>
                 </ion-item>
 

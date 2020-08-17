@@ -5,7 +5,7 @@ import { TasksService } from '../../Services/tasks.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NewTaskComponent } from 'src/app/Components/new-task/new-task.component';
-import { CreateTaskPage } from 'src/app/Components/create-task/create-task.page';
+import { CreateTaskPage } from 'src/app/Pages/create-task/create-task.page';
 
 @Component({
   selector: 'app-tab3',
@@ -17,6 +17,8 @@ export class Tab3Page implements OnInit, OnDestroy{
   loadedTasks: Task[];
   private taskSub: Subscription;
   isLoading = false;
+  isLoadingError = false;
+  isRefreshing = false;
   constructor(
     private tasksService: TasksService, 
     private router: Router,
@@ -32,7 +34,13 @@ export class Tab3Page implements OnInit, OnDestroy{
   ionViewWillEnter(){
     // this.loadedTasks = this.tasksService.myTasks;
 
-    this.isLoading = true;
+    if(this.tasksService.loginedUser){
+      this.isLoading = true;
+    }
+    else{
+      this.isLoadingError = true;
+      return;
+    }
 
     // Testing
     // TODO: Need to pass the right userId into fetchMyTasks
@@ -41,12 +49,25 @@ export class Tab3Page implements OnInit, OnDestroy{
     }); // Access API
   }
 
+  ionViewWillLeave(){
+
+  }
+
+  doRefresh(event) {
+    this.isRefreshing = true;
+
+    setTimeout(() => {
+      this.ionViewWillEnter();
+      event.target.complete();
+      this.isRefreshing = false;
+    }, 2000);
+  }
 
   onEdit(taskId: string, slidingItem: IonItemSliding){
     console.log("Getting into onEdit");
     console.log("Tast ID is: ", taskId);
     slidingItem.close();
-    this.router.navigate(['/', 'tasktracker', 'submit-my-progress', taskId]);
+    this.router.navigate(['/', 'tasktracker', 'mytasks', taskId]);
   }
 
   openNewTaskModal(){

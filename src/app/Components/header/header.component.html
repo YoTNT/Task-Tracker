@@ -1,21 +1,29 @@
-  <ion-header>
-    <ion-toolbar color="primary">
-      <ion-toggle hidden="true" color="dark">
-        
-      </ion-toggle>
-      <!-- <ion-title name="spntime"
-          id="spntime"
-          [(ngModel)]="currentDateTime"
-          ngDefaultControl>
-        
-         
-      
-          {{ currentDateTime }}
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-toggle hidden="true" color="dark"> </ion-toggle>
+    <ion-buttons slot="start">
+      <!-- <ion-back-button text="" defaultHref="/"> </ion-back-button> -->
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-label
+      *ngIf="getIsLogged()"
+      name="spntime"
+      position="stacked"
+      id="spntime"
+      [(ngModel)]="userName"
+      ngDefaultControl
+    >
+      <h3 style="padding-left: 3px;">{{ userName }}</h3>
+    </ion-label>
+    <ion-buttons slot="end" *ngIf="getIsLogged()">
+      <ion-button (click)="logout()" slot="secondary">
+        <ion-icon
   
-      </ion-title> -->
-        <ion-title name="spntime"
-          id="spntime"></ion-title>
-       
-    </ion-toolbar> 
-      
-  </ion-header>
+          name="lock-closed-outline"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- 
+    <ion-title name="spntime" id="spntime"></ion-title> -->
+  </ion-toolbar>
+</ion-header>
