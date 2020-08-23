@@ -1,0 +1,93 @@
+<!-- <ion-header  >
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title size="small" color="primary" class="ion-text-center"
+      ><h4>Create Task</h4></ion-title
+    >
+  </ion-toolbar>
+</ion-header> -->
+<ion-header  class="ion-no-margin"  >
+  <ion-toolbar color="primary">
+    <ion-icon
+      name="document-text-outline"
+  
+      size="large"
+      slot="start"
+      style="width: 24px !important;height: 24px !important;margin-right: 5px;margin-left: 5px;"
+    ></ion-icon>
+    <ion-label slot="start" color="light"> <p>Create Task</p></ion-label>
+    <ion-buttons slot="end">
+      <ion-button   (click)="onCancel()">
+        <ion-icon name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-text-center"  [fullscreen]="true" >
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          size-xs="12"
+          size-sm="12"
+          size-med="10"
+          offset-med="1"
+          size-lg="8"
+          offset-lg="2"
+          size-xlg="6"
+          offset-xlg="3"
+        >
+          <ion-card>
+            <ion-row>
+              <ion-col >
+                <ion-item>
+                  <ion-label color="medium" position="floating">Task Title</ion-label>
+                  <ion-input
+                    type="text"
+                    autocomplete
+                    autocorrect
+                    formControlName="title"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col  >
+                <ion-item>
+                  <ion-label color="medium"  position="floating">Task Details</ion-label>
+                  <ion-textarea
+                    rows="10"
+                    cols="20"
+                    autocomplete
+                    autocorrect
+                    formControlName="description"
+                  ></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button
+                  class="primary"
+                  expand="block"
+                  style="
+                    margin-left: 20%;
+                    margin-right: 20%;
+                    text-align: center !important;
+                  "
+                  (click)="onCreateTask()"
+                  [disabled]="!form.valid"
+                  >Create</ion-button
+                >
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

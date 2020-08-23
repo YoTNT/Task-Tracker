@@ -8,8 +8,11 @@ import {
 import Observable from "zen-observable";
 import { BehaviorSubject, throwError } from "rxjs";
 import { User } from "../Models/user";
-import { NavController } from "@ionic/angular";
+
 import { UsersService } from "./users.service";
+import { Router } from "@angular/router";
+import { buffer } from "rxjs/operators";
+import { NavController } from "@ionic/angular";
 
 const poolData = {
   UserPoolId: "us-east-2_JQy9YBUJg", // Your user pool id here
@@ -25,7 +28,11 @@ export class AuthService {
   newPassword;
   errmessage: EventEmitter<any> = new EventEmitter();
   userChange: EventEmitter<User> = new EventEmitter();
-  constructor(private navCtrl: NavController, private userServ: UsersService) {}
+  constructor(
+    private navCtrl: NavController,
+    private router: Router,
+    private userServ: UsersService
+  ) {}
 
   register(email, password) {
     const attributeList = [];
@@ -100,11 +107,14 @@ export class AuthService {
       });
     }).subscribe(
       (data) => {
-        console.log("signIn data", data);
+        // console.log(
+        //   "signIn data userPool.getCurrentUser() !=null",
+        //  self.isUserPoolLoggedIn()
+        // );
 
-        if (self.isLoggedIn()) {
+        if (self.isUserPoolLoggedIn()) {
           let currentUser = this.userServ.getUserByEmail(email);
-          if (currentUser) {
+          if (currentUser != null && currentUser != undefined) {
             self.setLoggedUser(currentUser);
             self.userChange.next(currentUser);
             self.redirectToHome();
@@ -116,23 +126,29 @@ export class AuthService {
       (err) => {
         self.errmessage = err.message;
         console.log("signIn err", err.message);
-        //throw err;
       }
     );
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     // console.log(
-    //   "userPool.getCurrentUser() != null",
-    //   userPool.getCurrentUser() != null
+    //   "this.getLoggedUser()!=null  ",
+    //   this.getLoggedUser() != null && this.getLoggedUser() != undefined
     // );
-    // console.log(
-    //   "userPool.getCurrentUser() != undefined",
-    //   userPool.getCurrentUser() != undefined
-    // );
+    try {
+      let usr = this.getLoggedUser();
+      if (usr == undefined || usr === undefined) return false;
+      else if (usr == null || usr === null) return false;
+      // the  user in the local storage is not null
+      return usr.email ? true : false;
+      // check if the email is not null or mepty
+    } catch {
+      return false;
+    }
+  }
+  isUserPoolLoggedIn() {
     return userPool.getCurrentUser() != null;
   }
-
   getAuthenticatedUser(): User {
     // gets the current user from the local storage
     if (this.isLoggedIn()) {
@@ -160,9 +176,8 @@ export class AuthService {
     let val = localStorage.getItem("client");
     let client = new User();
     client = JSON.parse(val);
-    console.log("getLoggedUser", client);
-    // this.CurrentUser = client;
-    // this.isLogged = true;
+    //console.log("getLoggedUser", client);
+
     return client;
   }
   getGuestUser(): any {
@@ -174,19 +189,23 @@ export class AuthService {
   public redirectToHome(): void {
     //  if (this.checkCurrentUser())
     // console.log("this.navCtrl.navigateRoot(/);");
-    this.navCtrl.navigateRoot("tasktracker/users-progress");
+    // this.navCtrl.navigateRoot("tasktracker/home");
+    window.location.replace("tasktracker/home");
     //this.router.navigate["/"];
   }
   public redirectToLogin(): void {
     // if (!this.checkCurrentUser())
-    this.navCtrl.navigateRoot("/");
+    this.navCtrl.navigateRoot("login");
     // this.router.navigate["login"];
+    // window.location.replace("login");
   }
 
   logOut() {
     userPool.getCurrentUser().signOut();
     this.cognitoUser = null;
     localStorage.clear();
+    sessionStorage.clear();
+
     this.redirectToLogin();
   }
   // async openDialog(email): Promise <any>{

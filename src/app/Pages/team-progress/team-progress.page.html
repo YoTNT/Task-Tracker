@@ -1,0 +1,102 @@
+
+<ion-header class="ion-no-margin">
+  <ion-toolbar>
+    <ion-icon
+      name="people-outline"
+      color="primary"
+      size="large"
+      slot="start"
+      style="
+        width: 24px !important;
+        height: 24px !important;
+        margin-right: 5px;
+        margin-left: 5px;
+      "
+    ></ion-icon>
+    <ion-label slot="start" color="primary"> <p>Team Progress</p></ion-label>
+    <ion-buttons slot="end">
+      <!-- <ion-button [routerLink]="['/', 'tasktracker', 'submit-my-progress', 'new']"> -->
+      <ion-button #btnRefresh id="btnRefresh" (click)="doRefresh($event)">
+        <ion-icon slot="icon-only" name="sync-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-no-margin ; no-padding">
+      <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
+        <div
+          style="
+            height: 0px;
+            text-align: center !important;
+            position: relative;
+            z-index: 1;
+          "
+          *ngIf="isLoaded"
+        >
+          <ion-spinner
+            style="position: relative; z-index: 2; top: 0px;"
+            name="crescent"
+          ></ion-spinner>
+        </div>
+
+        <ion-list
+          *ngFor="let item of userProgress; let i = index"
+          [(ngModel)]="userProgress"
+          ngDefaultControl
+          name="lstTaskProgress"
+        >
+          <ion-row style="justify-items: left;">
+            <ion-col>
+              <ion-item [routerLink]="['./', item.userId]" detail="true">
+                <ion-avatar slot="start" name="avatar">
+                  <img src="../assets/images/avatar.svg" />
+                </ion-avatar>
+                <ion-label class="ion-text-start ion-text-capitalize">
+                  <ion-label color="primary" mode="ios" position="stacked">
+                    <b>{{ item.userName }}</b></ion-label
+                  >
+
+                  <ion-label mode="ios" position="stacked">
+                    Total Tasks <b>({{ item.totaltasks }}) </b>
+                  </ion-label>
+                  <ion-label mode="ios" position="stacked">
+                    <ion-badge
+                      style="margin: 0px;"
+                      [color]="
+                        item.avgProgress > 99
+                          ? 'success'
+                          : item.avgProgress < 50
+                          ? 'warning'
+                          : 'primary'
+                      "
+                    >
+                      {{ item.avgProgress }}%
+                    </ion-badge>
+                  </ion-label>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="auto">
+              <ion-icon
+                color="primary"
+                name="chatbox-ellipses-outline"
+                style="
+                  flex: left;
+                  margin-top: 10px;
+                  margin-left: 5px;
+                  margin-right: 5px;
+                  width: 20px;
+                  height: 20px;
+                "
+                class="ion-text-start"
+              ></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

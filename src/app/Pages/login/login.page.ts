@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { UsersService } from "src/app/Services/users.service";
 
 import { AuthService } from "src/app/Services/authService.service";
+import { NavController } from "@ionic/angular";
 
 @Component({
   selector: "app-login",
@@ -10,7 +11,11 @@ import { AuthService } from "src/app/Services/authService.service";
   styleUrls: ["./login.page.scss"],
 })
 export class LoginPage implements OnInit {
-  constructor(private auth: AuthService, private userServ: UsersService) {
+  constructor(
+    private auth: AuthService,
+    private userServ: UsersService,
+    private navCtr: NavController
+  ) {
     if (auth.isLoggedIn()) {
       auth.redirectToHome();
     }
@@ -31,7 +36,9 @@ export class LoginPage implements OnInit {
     //   (loggedIn) => (this.loggedIn = loggedIn)
     // );
   }
-
+  back() {
+    this.navCtr.back();
+  }
   async signIn() {
     this.loading = true;
     let errmessage = "";
@@ -46,7 +53,7 @@ export class LoginPage implements OnInit {
           this.loading = false;
           this.message = err;
         }
-      }, 1000);
+      }, 2000);
     }).catch((error) => (this.message = error));
   }
 }

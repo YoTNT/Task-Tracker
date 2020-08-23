@@ -1,0 +1,111 @@
+<ion-header  translucent ="false">
+  <ion-toolbar>
+    <ion-label position="fixed" color="primary">
+      <p
+        style="
+          font-size:18px;
+           
+          text-align: center !important;
+        "
+      >
+        Users Progress Report
+      </p>
+    </ion-label>
+    <ion-buttons slot="start">
+      <ion-back-button
+        text=""
+        routerLink="/tasktracker/reports"
+      ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- <ion-content [fullscreen]="true">
+  <div class="ion-padding">
+<label for="users">Choose a User By Name and ID:</label>
+
+   <ion-select name="users" id="users" [(ngModel)]="userId">
+      <ion-select-option *ngFor="let user of userArr" value="{{user.id}}"
+        >{{user.name}} - {{user.id}}
+      </ion-select-option>
+    </ion-select>
+  </div>
+
+</ion-content> -->
+
+<ion-content  [fullscreen]="true" calss="ion-no-padding ion-no-margin">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-lg="6" size-md="6" offset-med="3" offset-lg="3">
+        <ion-row style="justify-items: left;">
+          <ion-col>
+            <ion-list>
+              <ion-item detail="false">
+                <ion-label
+                  size="small"
+                  color="medium"
+                  position="stacked"
+                  class="ion-text-start ion-text-capitalize ion-text-wrap"
+                >
+                  Choose a User By Name and ID:
+                </ion-label>
+                <ion-select name="users" id="users" [(ngModel)]="userId">
+                  <ion-select-option
+                    color="secondary"
+                    *ngFor="let user of userArr"
+                    value="{{user.id}}"
+                    >{{user.name}} - {{user.id}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item detail="false">
+                <ion-label
+                  size="small"
+                  color="medium"
+                  position="stacked"
+                  class="ion-text-start ion-text-capitalize ion-text-wrap"
+                >
+                  Choose a report date
+                </ion-label>
+
+                <ion-select   calss="ion-dark" color="dark" name="dates" id="dates" [(ngModel)]="taskDate">
+                  <ion-select-option
+                    size="samll"
+                 
+                    *ngFor="let date of dateArr"
+                    value="{{date}}"
+                    >{{date}}</ion-select-option
+                  >
+                </ion-select>
+              </ion-item>
+              <div
+                style="
+                  text-align: center !important;
+                  margin-left: 20%;
+                  margin-right: 20%;
+                "
+              >
+                <ion-button
+                  color="primary"
+                  expand="block"
+                  (click)="processData()"
+                  >Generate Report</ion-button
+                >
+              </div>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="ion-border" color="light">
+            <div
+              style="text-align: center !important;"
+              id="div_pie"
+              class="ion-padding"
+            ></div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

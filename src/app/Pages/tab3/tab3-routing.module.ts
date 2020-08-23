@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    loadChildren: () => import('../../Components/new-task/new-task.component').then( m => m.NewTaskComponent)
+    loadChildren: () => import('../../Pages/create-task/create-task.module').then( m => m.CreateTaskPageModule)
   }
 ];
 
