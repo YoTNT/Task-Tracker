@@ -4,7 +4,6 @@ import { Task } from '../../Models/task';
 import { TasksService } from '../../Services/tasks.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { NewTaskComponent } from 'src/app/Components/new-task/new-task.component';
 import { CreateTaskPage } from 'src/app/Pages/create-task/create-task.page';
 
 @Component({
@@ -32,7 +31,7 @@ export class Tab3Page implements OnInit, OnDestroy{
   }
 
   ionViewWillEnter(){
-    // this.loadedTasks = this.tasksService.myTasks;
+    console.log("ionViewWillEnter for Tab3!");
 
     if(this.tasksService.loginedUser){
       this.isLoading = true;
@@ -42,11 +41,9 @@ export class Tab3Page implements OnInit, OnDestroy{
       return;
     }
 
-    // Testing
-    // TODO: Need to pass the right userId into fetchMyTasks
     this.tasksService.fetchMyTasks(this.tasksService.loginedUser.userId).subscribe(() => {
       this.isLoading = false;
-    }); // Access API
+    });
   }
 
   ionViewWillLeave(){
@@ -81,6 +78,7 @@ export class Tab3Page implements OnInit, OnDestroy{
       })
       .then(resultData => {
         console.log("ResultData: ", resultData);
+        this.ionViewWillEnter();
       })
   }
 

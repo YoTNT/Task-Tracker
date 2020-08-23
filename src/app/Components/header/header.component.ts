@@ -14,14 +14,17 @@ export class HeaderComponent implements OnInit {
  
   }
 
-  public currentDateTime: any = moment().format("MM-DD-YYYY HH:mm:ss");
+ // public currentDateTime: any = moment().format("MM-DD-YYYY HH:mm:ss");
 
   ngOnInit(): void {
 
+    
     this.auth.userChange.subscribe((user) => {
       this.userName = user != null ? "Hi,"+user.userName : "";
      // this.isLogged = user != null
     });
+
+
     
   }
   ionViewWillEnter() {

@@ -15,10 +15,10 @@ export class CreateTaskPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private tasksService: TasksService,
-    // private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    console.log("Generating formGroup...");
     this.form = new FormGroup({
       title: new FormControl(null, {
         updateOn: 'blur',

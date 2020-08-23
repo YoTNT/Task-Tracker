@@ -26,24 +26,11 @@ export class TaskDetialPage implements OnInit {
         return;
       }
 																				 
-      // *** This code is loading data locally. ***
-      // *** Its purpose is for testing the UI  ***
-      // ********************************************************************
-      // this.tasksService.myTasks.subscribe(tasks => {
-      //   this.loadedTask = tasks.find(t => t.id === paramMap.get('taskId'));
-																		 
-      // })
-      // ********************************************************************
-
-      // TODO: This code need to be active using API
       this.taskSub = this.tasksService.getTask(paramMap.get('taskId')).subscribe(task =>{
         console.log("Subscripting: ", task);
         this.loadedTask = task;
+        console.log("This.loadedTask.id = ", this.loadedTask.id);
       });
-
-
-      // Old code
-      // this.loadedTask = this.tasksService.getMyTasks(paramMap.get('taskId'));
     })
   }
 
@@ -54,14 +41,13 @@ export class TaskDetialPage implements OnInit {
 
   deleteTask(){
     console.log("Trying to delete task with ID: ", this.loadedTask.id);
-    this.tasksService.deleteTask(this.loadedTask.id).subscribe();
-    this.navCtrl.navigateBack("/tasktracker/submit-my-progress");
+    this.tasksService.deleteTask(this.loadedTask).subscribe();
+    this.navCtrl.navigateBack("/tasktracker/mytasks");
     return;
   }
 
-  // Update MyTask list from API
   onViewWillEnter(){
-    this.tasksService.fetchMyTasks(this.tasksService.loginedUser.userId); // TODO: This should be the actual current login user
+    this.tasksService.fetchMyTasks(this.tasksService.loginedUser.userId);
   }
 
   onViewWillLeave(){

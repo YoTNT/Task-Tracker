@@ -19,13 +19,11 @@ export class ReportService
     return this.httpClient.get<Task[]>(`${this.path}/task?userid=${id}&date=${date}`);
   }
 
-  //test function - need endpoint for grabbing all dates
   getTasks(): Observable<Task[]>
   { 
     return this.httpClient.get<Task[]>(`${this.path}/task/`);
   }
 
-  //test function - need endpoint for grabbing all user objects
   getUsers(): Observable<UserInfo[]>
   {
     return this.httpClient.get<UserInfo[]>(`${this.path}/id/`);

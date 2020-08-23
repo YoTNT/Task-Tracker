@@ -9,11 +9,61 @@
       </ion-header> -->
       <ion-content>
         <ion-list>
-          <ion-item detail="false" [routerLink]="!getIsLogged()?'/':'/tasktracker/users-progress' " (click)="closeMenu()">
+          <!-- <ion-item
+            detail="false"
+            [routerLink]="auth.isLoggedIn() ? 'tasktracker' : '/'"
+            (click)="closeMenu()"
+          >
             <ion-label id="lblHome">
               <ion-icon name="home"></ion-icon>
-
               Home
+            </ion-label>
+          </ion-item> -->
+          <ion-item-divider>
+            <ion-toggle  (ionChange)="changeTheme($event)" size="small" slot="start"  > </ion-toggle>
+         
+          </ion-item-divider>
+          <ion-item
+            detail="false"
+            [routerLink]="auth.isLoggedIn() ? 'tasktracker/tbHome' : 'index'"
+            (click)="closeMenu()"
+          >
+            <ion-label id="lblHome">
+              <ion-icon name="home"></ion-icon>
+              Home
+            </ion-label>
+          </ion-item>
+
+          <ion-item
+            [routerLink]
+            detail="false"
+            *ngIf="getIsLogged()"
+            (click)="openNewTaskModal()"
+          >
+            <ion-label id="lblnewtask">
+              <ion-icon name="add-outline"></ion-icon>
+              New Task
+            </ion-label>
+          </ion-item>
+          <ion-item
+            detail="false"
+            [routerLink]="['tasktracker/mytasks']"
+            (click)="closeMenu()"
+            *ngIf="getIsLogged()"
+          >
+            <ion-label id="lblmytasks">
+              <ion-icon name="document-text-outline"></ion-icon>
+              My Tasks
+            </ion-label>
+          </ion-item>
+          <ion-item
+            detail="false"
+            [routerLink]="['tasktracker/teamprogress']"
+            (click)="closeMenu()"
+          >
+            <ion-label id="lblusers-progress">
+              <ion-icon name="people-outline"></ion-icon>
+              Team Progress
             </ion-label>
           </ion-item>
           <ion-item
@@ -23,15 +73,39 @@
           >
             <ion-label id="lblReports">
               <ion-icon name="bar-chart-outline"></ion-icon>
-
               Reports
             </ion-label>
           </ion-item>
-          <ion-item (click)="logout()" *ngIf="getIsLogged()">
+          <ion-item
+            detail="false"
+            [routerLink]
+            (click)="openWebSiteApp(); closeMenu()"
+          >
+            <ion-label id="lblweb">
+              <ion-icon name="globe-outline"></ion-icon>
+              WebSite
+            </ion-label>
+          </ion-item>
+
+          <ion-item
+            detail="false"
+            [routerLink]
+            (click)="logout()"
+            *ngIf="getIsLogged()"
+          >
             <ion-label id="lbllogout">
               <ion-icon name="lock-closed-outline"></ion-icon>
-
               logout
+            </ion-label>
+          </ion-item>
+          <ion-item
+            detail="false"
+            [routerLink]="['login']"
+            (click)="closeMenu()"
+            *ngIf="!getIsLogged()"
+          >
+            <ion-label id="lblSignIn">
+              <ion-icon name="lock-open-outline"></ion-icon> SignIn
             </ion-label>
           </ion-item>
         </ion-list>

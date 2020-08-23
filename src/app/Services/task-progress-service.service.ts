@@ -1,38 +1,66 @@
 import { Injectable, OnInit } from "@angular/core";
-import { EventService } from "./event-service.service";
 import { UserProgress } from "../Models/user-progress";
-import { Observable } from "rxjs";
+import { TasksService } from "./tasks.service";
 import { UsersService } from "./users.service";
-import { resolve } from "dns";
 import { User } from "../Models/user";
+import { pipe, from, of, Observable } from "rxjs";
+import {
+  map,
+  groupBy,
+  mergeMap,
+  reduce,
+  switchMap,
+  toArray,
+} from "rxjs/operators";
+import { Task } from "../Models/task";
+import { Key } from "protractor";
 
 @Injectable({
   providedIn: "root",
 })
 export class TaskProgressService implements OnInit {
-  userProgress = new Array<UserProgress>();
+  userProgressAry :Array<UserProgress> = new Array<UserProgress>();
 
-  constructor(private eventServ: EventService ) {
-    this.getUsersProgress();
-   
+  UsersTasks : Array<Array<Task>>= new Array<Array<Task>>();
+  taskAry: Task[] = new Array();
+  usersAry = new Array<User>();
+  constructor(private taskServ: TasksService, private userServ: UsersService) {
+   this.UsersTasks = this.getTasksGroupByUserId();
+    console.log("UsersTasks Print", this.UsersTasks);
+
+    // this.userProgressAry = this.getUsersProgress(this.UsersTasks);
+    // // console.log("getAllTasks", this.taskAry);
+    // console.log("this.userProgressAry", this.userProgressAry);
   }
+
   ngOnInit(): void {}
 
-  getUsersProgress() {
-    let up = new UserProgress();
-    up.avgProgress = 50;
-    // up.taskId = 1;
-    // up.taskName = "Angular 8 Complete course";
-    up.userId = 1;
-    up.userName = "Wael Dawoud";
-    up.totaltasks = 2;
-    this.userProgress.push(up);
+  
+  getTasksGroupByUserId(): Array<Array<Task>> {
+    let avg: number = 0;
+    let counter: number = 0;
+    let self = this;
+    let up: UserProgress;
+    let usertasksAry = new Array<Array<Task>>();
+    const userstasks$ = this.taskServ
+      .getAllTasks()
+      .pipe(switchMap((res) => res));
+    const srs$ = userstasks$.pipe(
+      groupBy((t: Task) => t.userid),
+      mergeMap((gr) => gr.pipe(toArray()))
+    );
+    srs$.subscribe((val) => {
+      usertasksAry.push(val);
+      //console.log("val,",val);
+    });
+    return usertasksAry;
+  }
 
-    up = null;
+  parsPercentage(val): number {
+    return parseFloat(val) > 1 ? parseFloat(val) * 0.01 : parseFloat(val);
   }
   getUserTasks(userid: number): Array<any> {
-    let arr = this.userProgress.filter((x) => x.userId === userid);
+    let arr = this.userProgressAry.filter((x) => x.userId === userid);
     return arr;
   }
-
 }
