@@ -6,6 +6,7 @@ import { BehaviorSubject, of, throwError, Observable } from "rxjs";
 import { User } from "../Models/user";
 import { AuthService } from "./authService.service";
 import { Router } from "@angular/router";
+import { SubTask } from "../Models/sub-task";
 
 interface TaskData {
   task: string;
@@ -22,7 +23,6 @@ interface TaskData {
 export class TasksService {
   private _myTasks = new BehaviorSubject<Task[]>([]);
   loginedUser = new User();
-
   path: string = "https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta";
   constructor(
     private httpClient: HttpClient,
@@ -79,7 +79,7 @@ export class TasksService {
 
   getTask(id: string) {
     return this.httpClient
-      .get<TaskData>(
+      .get<any>(
         `https://46odim7l6f.execute-api.us-east-2.amazonaws.com/beta/task/?taskid=${id}`
       )
       .pipe(
@@ -95,6 +95,23 @@ export class TasksService {
         })
       );
   }
+  /*
+  //::Wael:20200824: getSubTasks get the  sub tasks by task id
+  */
+  getSubTasks(taskId): Promise<any[]> {
+    return this.httpClient
+      .get<SubTask[]>(`${this.path}/task?subtask=${taskId}`)
+      .toPromise();
+  }  /*
+  //::Wael:20200824: addSubTask add  the  sub tasks by task id
+  */
+  addSubTask(id, subTask: any): Promise<any>{
+    return this.httpClient.post<any>(`${this.path}/task/${id}`, subTask).toPromise();
+  }
+  updateSubTask( subTask: any): Promise<any>{
+    return this.httpClient.put<any>(`${this.path}/subtask`, subTask).toPromise();
+  }
+
 
   addTask(taskTitle: string, taskDescription: string) {
     console.log(

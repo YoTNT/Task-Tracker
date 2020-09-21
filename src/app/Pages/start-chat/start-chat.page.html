@@ -1,0 +1,138 @@
+<!-- ////////////////////////////////////////////////////////////// -->
+<ion-header translucent="false">
+  <ion-toolbar>
+    <ion-label slot="start" color="primary" (click)="back()">
+      <ion-icon
+        slot="icon-only"
+        size="large"
+        name="chevron-back-outline"
+      ></ion-icon>
+    </ion-label>
+
+    <ion-label position="fixed" color="primary">
+      <p
+        style="
+          font-size: 18px;
+
+          text-align: center !important;
+        "
+      >
+        Create New Group Chat
+      </p>
+    </ion-label>
+    <ion-buttons slot="start">
+      <ion-back-button
+        text=""
+        routerLink="/tasktracker/group-chat"
+      ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" calss="ion-no-padding ion-no-margin">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-lg="6" size-md="6" offset-med="3" offset-lg="3">
+        <ion-row style="justify-items: left">
+          <ion-col class="ion-no-margin ion-no-padding">
+            <ion-list>
+              <ion-item detail="false">
+                <ion-label position="floating">
+                  Group Title <ion-text color="danger"> * </ion-text></ion-label
+                >
+                <ion-input [(ngModel)]="title"></ion-input>
+              </ion-item>
+
+              <ion-item detail="true" (click)="openSelect()">
+                <ion-buttons>
+                  <!-- <ion-icon name="add" slot="start">
+                    </ion-icon> -->
+                  <ion-label>
+                    Select Group Members<ion-text color="danger"> * </ion-text>
+                  </ion-label>
+                </ion-buttons>
+
+                <ion-select
+                  hidden="true"
+                  #lstallusers
+                  #ddlUsers
+                  [(ngModel)]="selectedUsers"
+                  name="lstallusers"
+                  multiple
+                  okText="OK"
+                  cancelText="Cancel"
+                  [selectedText]=""
+                >
+                  <ion-select-option
+                    *ngFor="let item of listOfUsers"
+                    [value]="item"
+                    selectedText=""
+                  >
+                    {{ item.userName }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            class="ion-no-padding ion-no-margin"
+            size="12"
+            class="ion-border"
+            color="light"
+          >
+            <!-- <ion-item-divider color="secondary" mode="ios" outline="true">
+              <ion-label><p>Group Members</p></ion-label>
+            </ion-item-divider> -->
+
+            <ion-list
+              class="ion-no-padding ion-no-margin"
+              lines="none"
+              detail="false"
+              ngDefaultControl
+              [(ngModel)]="selectedUsers"
+              name="lstusers"
+              #lstusers
+            >
+              <ion-chip
+                *ngFor="let item of selectedUsers;let i =index"
+                color="primary"
+                mode="ios"
+                outline="true"
+                style="height: auto"
+              >
+                <ion-avatar color="dark">
+                  <!-- <img src="../assets/images/avatar.svg"/> -->
+                  <text-avatar  text ={{item.userName}}></text-avatar>
+                </ion-avatar>
+                <ion-label position="stacked">
+                  {{item.userName}}
+                  <ion-note position="stacked"
+                    ><p>{{item.email}}</p>
+                  </ion-note></ion-label
+                >
+                <ion-icon
+                  name="close"
+                  class="ion-float-right"
+                  color="danger"
+                  (click)="removeUser(i)"
+                ></ion-icon>
+              </ion-chip>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-button
+    class="ion-text-capitalize ion-margin"
+    color="primary"
+    expand="block"
+    (click)="createGroup()"
+    [disabled]="!title||selectedUsers.length<1"
+    >Create
+  </ion-button>
+</ion-footer>

@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,195 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@media screen and (max-width: 600px) {
+  #cold {
+    border: 0px;
+    border-style: none;
+  }
+}
+@media screen and (min-width: 601px) {
+  #cold {
+    border: 1px;
+    border-style: solid;
+    border-color: rgb(190, 237, 252);
+    margin-bottom: 1px;
+    padding: 0px;
+  }
+}
+.deleteMsg {
+  color: var(--ion-color-danger);
+}
+/* DOES NOT WORK - not specific enough */
+// .alert-wrapper {
+//   background: var(--ion-color-danger);
+//   color: var(--ion-color-danger);
+// }
+
+// /* Works - pass "my-custom-class" in cssClass to increase specificity */
+// .my-custom-class .alert-wrapper {
+//   // background: #cc0808;
+//   background:var(--ion-color-danger);
+//   color: var(--ion-color-danger);
+// }
+//.alertCancel {
+// background:var(--ion-color-danger);
+// color: var(--ion-color-danger);
+//}
+.alertButton {
+  button.alertButton {
+    color: var(--ion-color-danger-contrast);
+    background: var(--ion-color-danger-tint);
+    text-align: center;
+    text-transform: capitalize;
+  }
+  .alertHeader {
+    color: var(--ion-color-danger);
+  }
+}
+// ion-refresher ion-refresher-content {
+//   --color:rgb(179, 27, 27) !important;
+
+//   .refresher-pulling-text, .refresher-refreshing-text, .refresher-refreshing-icon, .refresher-pulling-icon {
+//     color: rgb(180, 124, 124) !important;
+//   }
+// }
+:root {
+  .dark-theme {
+    //--ion-toolbar-background: #1e1e1e;
+    //--ion-item-background: #0d0d0d;
+
+    --ion-color-primary: #16b7fce8;
+    --ion-color-primary-rgb: 244, 245, 248;
+    --ion-color-primary-contrast: #0d0d0d;
+    --ion-color-primary-contrast-rgb: 0, 0, 0;
+    --ion-color-primary-shade: #ddd;
+    --ion-color-primary-tint: #f5f6f9;
+    --ion-background-color: #0d0d0d;
+    --ion-background-color-rgb: 0, 0, 0;
+    --ion-text-color: #a5e9fd;
+    --ion-text-color-rgb: 255, 255, 255;
+    --ion-color-step-50: #1e1e1e;
+    --ion-color-step-100: #1e1e1e;
+    --ion-color-step-150: #262626;
+    --ion-color-step-200: #333333;
+    --ion-color-step-250: #2487b387;
+    --ion-color-step-300: #4d4d4d;
+    --ion-color-step-350: #595959;
+    --ion-color-step-400: #8b8e94;
+    --ion-color-step-450: #737373;
+    --ion-color-step-500: #808080;
+    --ion-color-step-550: #8c8c8c;
+    --ion-color-step-600: #999999;
+    --ion-color-step-650: #a6a6a6;
+    --ion-color-step-700: #b3b3b3;
+    --ion-color-step-750: #bfbfbf;
+    --ion-color-step-800: #cccccc;
+    --ion-color-step-850: #d9d9d9;
+    --ion-color-step-900: #e6e6e6;
+    --ion-color-step-950: #f5f6f9;
+    --ion-toolbar-background: #1e1e1e;
+    --ion-item-background: #0d0d0d;
+
+    --ion-color-dark: #222428;
+    --ion-color-dark-rgb: 34, 36, 40;
+    --ion-color-dark-contrast: #ffffff;
+    --ion-color-dark-contrast-rgb: 255, 255, 255;
+    --ion-color-dark-shade: #1e2023;
+    --ion-color-dark-tint: #595959;
+
+    --ion-color-secondary: #3dc2ff;
+    --ion-color-secondary-rgb: 61, 194, 255;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #36abe0;
+    --ion-color-secondary-tint: #50c8ff;
+
+    --ion-color-tertiary: #5260ff;
+    --ion-color-tertiary-rgb: 82, 96, 255;
+    --ion-color-tertiary-contrast: #f5f6f9;
+    --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+    --ion-color-tertiary-shade: #4854e0;
+    --ion-color-tertiary-tint: #6370ff;
+
+    --ion-color-success: #2dd36f;
+    --ion-color-success-rgb: 45, 211, 111;
+    --ion-color-success-contrast: #0d0d0d;
+    --ion-color-success-contrast-rgb: 255, 255, 255;
+    --ion-color-success-shade: #28ba62;
+    --ion-color-success-tint: #42d77d;
+
+    --ion-color-warning: #ffc409;
+    --ion-color-warning-rgb: 255, 196, 9;
+    --ion-color-warning-contrast: #000000;
+    --ion-color-warning-contrast-rgb: 0, 0, 0;
+    --ion-color-warning-shade: #e0ac08;
+    --ion-color-warning-tint: #ffca22;
+
+    --ion-color-danger: #eb445a;
+    --ion-color-danger-rgb: 235, 68, 90;
+    --ion-color-danger-contrast: #ffffff;
+    --ion-color-danger-contrast-rgb: 255, 255, 255;
+    --ion-color-danger-shade: #cf3c4f;
+    --ion-color-danger-tint: #ed576b;
+
+    --ion-color-medium: #999;
+    --ion-color-medium-rgb: 146, 148, 156;
+    --ion-color-medium-contrast: #ffffff;
+    --ion-color-medium-contrast-rgb: 255, 255, 255;
+    --ion-color-medium-shade: #808289;
+    --ion-color-medium-tint: #9d9fa6;
+
+    --ion-color-light: #f5f6f9;
+    --ion-color-light-rgb: 244, 245, 248;
+    .deleteMsg {
+      color: var(--ion-color-danger-contrast);
+    }
+    .alertButton {
+      --background: var(--ion-color-dark-tint);
+      button.alertButton {
+        color: var(--ion-color-danger-contrast);
+        background: var(--ion-color-danger-tint);
+      }
+      .alertHeader {
+        color: var(--ion-color-danger);
+      }
+    }
+    ion-chip {
+      --background: var(--ion-color-dark-tint);
+    }
+
+    // --ion-card-background: #1c1c1d;
+    // .item-detail-icon {
+    //   --item-detail-icon:  var(--ion-color-light);
+    //     color: var(--ion-color-light);
+    //    --item-detail-icon: "chevron-down-outline";
+    //     opacity: 90%;
+     
+    // }
+    ion-card {
+      border-color: #58b9f1;
+      border: solid;
+      border-width: 0.5px;
+      // padding: 2px;
+      //   box-shadow: 2px 2px #d3cdcd;
+      //box-shadow:0px 2px 0px #9c9c9c;
+      box-shadow: 0px 1px 1px rgb(54, 54, 54), 0px 2px 2px rgb(175, 173, 173);
+    }
+    // ion-card-title {
+    //   --color: #d4ac26;
+    // }
+    // ion-input
+    // {
+    //   --background:transparent;
+    // }
+
+    // ion-toggle {
+    //   --background: #000;
+    //   --background-checked: #7a49a5;
+
+    //   --handle-background: #7a49a5;
+    //   --handle-background-checked: #000;
+    // }
+  }
+}

@@ -1,20 +1,14 @@
-<ion-header style=" text-align: center !important">
+<ion-header style="text-align: center !important;">
   <ion-toolbar>
-    <ion-chip
-      outline
-      color="secondary"
-
- 
-    >
+    <ion-chip outline color="secondary">
       <b style="margin: 20px; font-size: medium; float: inline-start;"
         >LTI Task Tracker</b
       >
     </ion-chip>
   </ion-toolbar>
-  
 </ion-header>
 
-<ion-content fullscreen   >
+<ion-content fullscreen>
   <!-- <ion-chip outline color="warning"  class="ion-margin ion-padding">   <ion-label  [(ngModel)]="currentTime">
     <span >
       {{currentDate}}  
@@ -22,29 +16,33 @@
     <span> - {{currentTime}}</span> 
   </ion-label> </ion-chip> -->
   <!-- <router-outlet></router-outlet> -->
-  <ion-segment color="medium">
+  <ion-segment color="dark">
     <ion-segment-button>
-      <ion-label color="secondary" name="lbldate" #lbldate>
-       <b> {{currentDate}}</b> 
+      <ion-label  color="secondary" name="lbldate" #lbldate>
+        <b style="font-size: medium;"> {{currentDate}}</b>
       </ion-label>
     </ion-segment-button>
     <ion-segment-button>
-      <ion-label       ngDefaultControl
+      <ion-label
+       
+        ngDefaultControl
         color="secondary"
         [(ngModel)]="currentTime"
         name="lbltime"
         #lbltime
-        ><b> {{currentTime}} </b></ion-label
+        ><b style="font-size: medium;"> {{currentTime}} </b></ion-label
       >
     </ion-segment-button>
   </ion-segment>
 </ion-content>
-<ion-footer class="ion-no-border ion-justify-content-center" style=" text-align: center !important">
-   
-  <ion-toolbar *ngIf="!auth.isLoggedIn()" >
-    <ion-button 
+<ion-footer
+  class="ion-no-border ion-justify-content-center"
+  style="text-align: center !important;"
+>
+  <ion-toolbar *ngIf="!auth.isLoggedIn()">
+    <ion-button
       color="primary"
-      style="width: 180px;align-items: center !important;"
+      style="width: 180px; align-items: center !important;"
       class="ion-margin ion-text-capitalize"
       (click)="openlogin()"
     >

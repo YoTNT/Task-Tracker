@@ -1,0 +1,130 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" class="ion-margin-right">
+      <ion-back-button
+        text=""
+        defaultHref="tasktracker/group-chat"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-chip class="ion-margin-start" color="primary">
+      <ion-avatar>
+        <text-avatar text="{{chatTitle}}"></text-avatar>
+      </ion-avatar>
+      <ion-label>{{ chatTitle }}</ion-label>
+    </ion-chip>
+    <ion-buttons slot="end"> </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content translucent #content class="ion-padding">
+  <ion-grid class="ion-margin-vertical">
+    <ion-row *ngFor="let message of messages | async">
+      <ion-col
+        size="9"
+        size-md="6"
+        *ngIf="message.from !== currentFirebaseUserId"
+        class="  other-message  ion-no-padding ion-no-margin"
+      >
+        <ion-label
+          style="  display: flex;
+        align-items: center ;margin-bottom: 4px; "
+        >
+          <small>
+            <ion-avatar
+              class="ion-no-padding"
+              style=" margin-right:4px !important ;width: 23px;height: 23px; "
+            >
+              <text-avatar text="{{message.user }}"></text-avatar>
+            </ion-avatar>
+          </small>
+          <ion-label color="danger"
+            ><small>{{ message.user }} </small></ion-label
+          >
+        </ion-label>
+
+        <span style="color: #000;font-size: small ;font-stretch: expanded;"
+          >{{ message.msg }}
+          <img [src]="message.file" *ngIf="message.file" />
+        </span>
+
+        <div class="time ion-text-right">
+          <br />{{ message.createdAt?.toMillis() | date:'short' }}
+        </div>
+      </ion-col>
+
+      <ion-col
+        class="my-message"
+        offset="3"
+        offset-md="6"
+        size="9"
+        size-md="6"
+        *ngIf="message.from === currentFirebaseUserId"
+      >
+        <ion-label
+          style="  display: flex;
+    align-items: center ;margin-bottom: 4px; "
+        >
+          <small>
+            <ion-avatar
+              class="ion-no-padding"
+              style=" margin-right:4px !important ;width: 23px;height: 23px; "
+            >
+              <text-avatar text="{{message.user }}"></text-avatar>
+            </ion-avatar>
+          </small>
+          <ion-label color="tertiary"
+            ><small>{{ message.user }} </small></ion-label
+          >
+        </ion-label>
+        <span style="color: #000;font-size: small ;font-stretch: expanded;"
+          >{{ message.msg }}
+          <img [src]="message.file" *ngIf="message.file" />
+        </span>
+        <div class="time ion-text-right">
+          <br />{{ message.createdAt?.toMillis() | date:'short' }}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="primary">
+    <ion-fab-button size="small">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="sendFileCamera()">
+        <ion-icon  color="danger" name="camera"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button  (click)="sendFileGallery()">
+        <ion-icon color="warning" name="image"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
+
+<ion-footer class="ion-no-margin">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="10">
+          <ion-textarea
+            class="message-input"
+            rows="1"
+            [(ngModel)]="newMsg"
+          ></ion-textarea>
+        </ion-col>
+        <ion-col size="2">
+          <!-- style="padding-bottom: 20px;" -->
+          <ion-button
+            fill="clear"
+            color="primary"
+            [disabled]="newMsg === ''"
+            (click)="sendMessage()"
+          >
+            <ion-icon name="send" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

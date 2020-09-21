@@ -1,6 +1,5 @@
 <ion-header>
   <ion-toolbar color="primary">
-
     <ion-buttons slot="start">
       <!-- <ion-back-button text="" defaultHref="/"> </ion-back-button> -->
       <ion-menu-button menu="main-menu"></ion-menu-button>
@@ -13,16 +12,18 @@
       [(ngModel)]="userName"
       ngDefaultControl
     >
-      <h3 style="padding-left: 3px;">{{ userName }}</h3>
+      <h3 style="padding-left: 3px">{{ userName }}</h3>
     </ion-label>
     <ion-buttons slot="end" *ngIf="getIsLogged()">
       <ion-button (click)="logout()" slot="secondary">
-        <ion-icon
-  
-          name="lock-closed-outline"
-        ></ion-icon>
+        <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <!-- <ion-buttons slot="end" *ngIf="!getIsLogged()">
+      <ion-button   [routerLink]="['login']" slot="secondary">
+        <ion-icon size="small" name="lock-closed-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
     <!-- 
     <ion-title name="spntime" id="spntime"></ion-title> -->
   </ion-toolbar>

@@ -1,0 +1,71 @@
+.my-message {
+  padding: 10px !important;
+  border-radius: 15px !important;
+  margin-bottom: 4px !important;
+
+  img {
+    width: 100%;
+  }
+  position: relative;
+  background: #a8eef5;
+  border-radius: 0.4em;
+}
+
+.my-message:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 15px solid transparent;
+  border-right-color: #a8eef5;
+  border-left: 0;
+  border-top: 0;
+  margin-top: -10px;
+  margin-left: -15px;
+}
+
+.other-message {
+  padding: 10px !important;
+  border-radius: 15px !important;
+  margin-bottom: 4px !important;
+
+  img {
+    width: 100%;
+  }
+  position: relative;
+  background: #fff3e5;
+  border-radius: 0.4em;
+}
+
+.other-message :after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 27px solid transparent;
+  border-left-color: #fff3e5;
+  border-right: 0;
+  border-bottom: 0;
+  margin-top:-10px;
+  margin-right: -18px;
+}
+.time {
+  // color: #dfdfdf;
+  color: var(--ion-color-medium);
+  float: right !important;
+  font-size: x-small;
+  font-style: italic;
+}
+
+.message-input {
+  width: 100%;
+  border: 1px solid var(--ion-color-secondary);
+  border-radius: 10px;
+  background: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  resize: none;
+}

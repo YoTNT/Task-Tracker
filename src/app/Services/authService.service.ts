@@ -59,7 +59,7 @@ export class AuthService {
     };
     return new Observable((observer) => {
       const cognitoUser = new CognitoUser(user);
-      cognitoUser.confirmRegistration(code, true, function (err, result) {
+      cognitoUser.confirmRegistration(code, true, function(err, result) {
         if (err) {
           // console.log(err);
           observer.error(err);
@@ -86,12 +86,12 @@ export class AuthService {
     const cognitoUser = new CognitoUser(userData);
     new Observable((observer) => {
       cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function (result) {
+        onSuccess: function(result) {
           //    console.log("result", result);
           observer.next(result);
           observer.complete();
         },
-        onFailure: function (err) {
+        onFailure: function(err) {
           // console.log("onFailure", err);
           // self.errmessage.next(err.message);
           self.errmessage.emit(err.message);
@@ -111,20 +111,20 @@ export class AuthService {
         //   "signIn data userPool.getCurrentUser() !=null",
         //  self.isUserPoolLoggedIn()
         // );
-
-        if (self.isUserPoolLoggedIn()) {
-          let currentUser = this.userServ.getUserByEmail(email);
-          if (currentUser != null && currentUser != undefined) {
-            self.setLoggedUser(currentUser);
-            self.userChange.next(currentUser);
-            self.redirectToHome();
-            // this.sendUser(username);
-            // this.sendState(true);
-          }
-        } else self.redirectToLogin();
+        if (data)
+          if (self.isUserPoolLoggedIn()) {
+            let currentUser = this.userServ.getUserByEmail(email);
+            if (currentUser != null && currentUser != undefined) {
+              self.setLoggedUser(currentUser);
+              self.userChange.emit(currentUser);
+              self.redirectToHome();
+              // this.sendUser(username);
+              // this.sendState(true);
+            }
+          } else self.redirectToLogin();
       },
       (err) => {
-        self.errmessage = err.message;
+        self.errmessage.emit(err.message);
         console.log("signIn err", err.message);
       }
     );
@@ -206,7 +206,7 @@ export class AuthService {
     localStorage.clear();
     sessionStorage.clear();
 
-    this.redirectToLogin();
+    this.redirectToHome();
   }
   // async openDialog(email): Promise <any>{
   // let dialogRef = this.dialog.open(ForgotComponent, {data : {email: email}});

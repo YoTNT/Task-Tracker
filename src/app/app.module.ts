@@ -18,8 +18,20 @@ import { ReportService } from "./Services/report.service";
 import { TaskProgressService } from "./Services/task-progress-service.service";
 import { ThemeService } from "./Services/theme-service.service";
 
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+// import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
+import { Camera } from '@ionic-native/camera/ngx';
+import { Firebase } from '@ionic-native/firebase/ngx';
+//import { TextAvatarDirective } from './directives/text-avatar.directive';
+// import { SubTaskComponent } from "./Components/sub-task/sub-task.component";
+// import { ExpandableComponent } from "./Components/expandable/expandable.component";
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -29,8 +41,13 @@ import { ThemeService } from "./Services/theme-service.service";
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    // FirestoreSettingsToken,
+    AngularFireStorageModule
+
   ],
   providers: [
     StatusBar,
@@ -41,7 +58,9 @@ import { ThemeService } from "./Services/theme-service.service";
     TasksService,
     ThemeService,
     TaskProgressService,
-    ReportService,
+    ReportService,    Camera,
+    //  { provide: Camera, useClass: CameraMock },
+    Firebase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

@@ -1,0 +1,176 @@
+<ion-content>
+  <div
+    class="ion-no-margin ; no-padding"
+    style="
+      height: 0px;
+      text-align: center !important;
+      position: relative;
+      z-index: 1;
+    "
+  >
+    <ion-refresher
+      style="position: relative; z-index: 2; top: 0px"
+      slot="fixed"
+      (ionRefresh)="doRefresh($event)"
+    >
+      <ion-refresher-content refreshingSpinner="crescent">
+      </ion-refresher-content>
+    </ion-refresher>
+  </div>
+
+  <!-- <ion-grid *ngIf="userProgress.length > 0">
+    <ion-row class="ion-no-margin ; no-padding">
+      <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
+        <ion-list
+          *ngFor="let item of userProgress; let i = index"
+          [(ngModel)]="userProgress"
+          ngDefaultControl
+          name="lstTaskProgress"
+        >
+          <ion-row style="justify-items: left;">
+            <ion-col>
+              <ion-item
+                [routerLink]="['/', 'tasktracker', 'taskview', item.id]"
+                detail="true"
+                md="ellipsis-vertical"
+                ios="ellipsis-vertical "
+              >
+                <ion-avatar slot="start" name="avatar">
+                  <img src="../assets/images/avatar.svg" />
+                </ion-avatar>
+                <ion-label class="ion-text-start ion-text-capitalize">
+                  <ion-label color="primary" mode="ios" position="stacked">
+                    <b>{{ item.userName }}</b></ion-label
+                  >
+
+                  <ion-label mode="ios" position="stacked">
+                
+                    {{ i + 1 }}.{{ item.task }}
+
+                    <ion-label mode="ios" style="float: right;">
+                      <ion-badge
+                        style="float: right;"
+                        [color]="
+                          item.progress > 99
+                            ? 'success'
+                            : item.progress < 50
+                            ? 'warning'
+                            : 'primary'
+                        "
+                      >
+                        {{ item.progress }}%
+                      </ion-badge>
+                    </ion-label>
+                  </ion-label>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="auto">
+
+              <ion-icon  
+              [routerLink]="['/tasktracker','chat',user? user.email:'',user? user.userId:'']"
+                color="primary"
+                name="chatbox-ellipses-outline"
+                style="
+                  flex: left;
+                  margin-top: 10px;
+                  margin-left: 5px;
+                  margin-right: 5px;
+                  width: 20px;
+                  height: 20px;
+                "
+                class="ion-text-start"
+              ></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <ion-grid *ngIf="userProgress.length > 0">
+    <ion-row class="ion-no-margin ; no-padding">
+      <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
+        <ion-list
+          *ngFor="let item of userProgress; let i = index"
+          [(ngModel)]="userProgress"
+          ngDefaultControl
+          name="lstTaskProgress"
+        >
+          <ion-row style="justify-items: left">
+            <ion-col>
+              <ion-item
+                [routerLink]="['/', 'tasktracker', 'taskview', item.id]"
+                detail="true"
+              >
+                <ion-avatar slot="start" name="avatar">
+                  <text-avatar  text ={{item.userName}}></text-avatar>
+                  <!-- <img src="../assets/images/avatar.svg" /> -->
+                </ion-avatar>
+                <ion-label class="ion-text-start ion-text-capitalize">
+                  <ion-label color="primary" mode="ios" position="stacked">
+                    <b>{{ item.userName }} </b></ion-label
+                  >
+
+                  <ion-label size="small" mode="ios" position="stacked" class="ion-text-wrap">
+                    <b style="font-size: smaller"> {{ item.task }} </b>
+                  </ion-label>
+                  <ion-label mode="ios" position="stacked">
+                    <ion-badge
+                      style="margin: 0px"
+                      [color]="
+                        item.progress > 99
+                          ? 'success'
+                          : item.progress < 50
+                          ? 'warning'
+                          : 'primary'
+                      "
+                    >
+                      {{ item.progress }}%
+                    </ion-badge>
+                  </ion-label>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+
+            <!-- <ion-col size="auto">
+              <ion-icon
+                [routerLink]="[
+                  '/tasktracker',
+                  'chat',
+                  user ? user.email : '',
+                  user ? user.userId : ''
+                ]"
+                color="primary"
+                name="chatbox-ellipses-outline"
+                style="
+                  flex: left;
+                  margin-top: 10px;
+                  margin-left: 5px;
+                  margin-right: 5px;
+                  width: 20px;
+                  height: 20px;
+                "
+                class="ion-text-start"
+              ></ion-icon>
+            </ion-col> -->
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div
+    #divMsg
+    style="display: none"
+    class="ion-no-padding ion-margin-top ion-margin-horizontal"
+  >
+    <ion-chip
+      color="danger"
+      class="ion-justify-content-center"
+      style="width: 98%"
+    >
+      <ion-label>There is no task(s) for anyone today .</ion-label>
+    </ion-chip>
+  </div>
+</ion-content>

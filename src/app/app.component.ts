@@ -28,7 +28,7 @@ export class AppComponent {
   loggedin: boolean = true; // to get this value form Auth service
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
-
+  Email: string;
   @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
   constructor(
     // private router: ActivatedRoute,
@@ -50,6 +50,7 @@ export class AppComponent {
     this.initializeApp();
     // this.backButtonEvent();
     //console.log("AppComponent constructor");
+    this.Email = auth.getLoggedUser()?auth.getLoggedUser().email:'';
   }
 
   initializeApp() {
@@ -118,8 +119,8 @@ export class AppComponent {
   changeTheme(e) {
     console.log(e.target.checked);
     e.target.checked
-      ? this.themeServ.enableDarkMode() 
-      : this.enableLightTheme();
+      ? this.enableLightTheme()
+      : this.themeServ.enableDarkMode(); 
   }
   enableDarkTheme() {}
   enableLightTheme() {

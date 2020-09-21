@@ -22,7 +22,9 @@ export class ReportPage {
 
   constructor(public platform: Platform, public api: ReportService) {
     this.api.getUsers().subscribe((data) => {
-      this.userArr = data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)); 
+      this.userArr = data.sort((a, b) =>
+        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+      );
     });
 
     this.api.getTasks().subscribe((data) => {
@@ -59,7 +61,7 @@ export class ReportPage {
         self.tasks = data;
       });
 
-    setTimeout(() => this.DrawPieChart(), 250);
+    setTimeout(() => this.DrawPieChart(), 500);
   }
 
   DrawPieChart() {
@@ -71,8 +73,9 @@ export class ReportPage {
 
     //for percent in format "#%" - parseFloat and divide by 100
     for (const t of this.tasks) {
-      data.addRows([[t.task, parseFloat(t.progress + "") / 100]]);
-      total = total + parseFloat(t.progress + "") / 100;
+      const val = this.parsPercentage(t.progress);
+      data.addRows([[t.task, val / 100]]);
+      total = total + val / 100;
     }
     if (total < 1) {
       data.addRows([["Pending", 1 - total]]);
@@ -81,12 +84,35 @@ export class ReportPage {
     var options = {
       title: "Associate Task Status",
       is3D: true,
-      legend: { position: "labeled" },
+      backgroundColor: {
+        stroke: "#16b7fc",
+        strokeWidth: 1,
+        fill: "transparent",
+      },
+
+      legend: {
+        position: "labeled",
+        textStyle: {
+          color: "#16b7fc",
+          bold: false,
+          italic: true,
+        },
+      },
+      enableInteractivity: true,
+      titleTextStyle: {
+        color: "#16b7fc",
+        fontSize: "13",
+      },
     };
 
     var chart = new google.visualization.PieChart(
       document.getElementById("div_pie")
     );
     chart.draw(data, options);
+  }
+  parsPercentage(val): number {
+    return Number(
+      (parseFloat(val) > 1 ? parseFloat(val) : parseFloat(val) * 100).toFixed(0)
+    );
   }
 }

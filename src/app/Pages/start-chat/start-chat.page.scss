@@ -1,0 +1,18 @@
+/* Set the width to the full container and center the content */
+ion-select {
+    /* Applies to the value and placeholder color */
+    color: #545ca7;
+    color: var(--ion-color-primary);
+    /* Set a different placeholder color */
+    --placeholder-color:var(--ion-color-primary) ;
+  
+    /* Set full opacity on the placeholder */
+    --placeholder-opacity: 1;
+  };
+  ion-select {
+    width: 100%;
+  
+    justify-content: center;
+  };
+  
+//   

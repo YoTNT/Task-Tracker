@@ -6,6 +6,7 @@ import { AuthService } from "src/app/Services/authService.service";
 import { UsersService } from "src/app/Services/users.service";
 import { TasksService } from "src/app/Services/tasks.service";
 import { Task } from "src/app/Models/task";
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: "app-user-tasks",
@@ -14,6 +15,7 @@ import { Task } from "src/app/Models/task";
 })
 export class UserTasksPage implements OnInit {
   userProgress: Array<any> = [];
+  userProgressList: Array<any> = [];
   tasks: Task[] = new Array();
   user:User = Object.create(User);
   //  listingdata:Array<any> = [];
@@ -22,10 +24,11 @@ export class UserTasksPage implements OnInit {
     private activeroute: ActivatedRoute,
     private aut: AuthService,
     private usrServ: UsersService,
-    private taskServ: TasksService
+    private taskServ: TasksService,
+    public navCtr:NavController,
   ) {}
 
-  private getUserTasks() {
+  getUserTasks() {
     let userid: number;
     this.activeroute.paramMap.subscribe((param) => {
       if (!param.has("userid")) {
@@ -37,11 +40,17 @@ export class UserTasksPage implements OnInit {
       // console.log(userid);
 
       this.taskServ.fetchMyTasks("" + userid).subscribe((tasks) => {
+        this.userProgressList = tasks.slice();
+        this.userProgress= new Array();
         this.userProgress = tasks.slice();
+      
       });
     });
   }
-
+  back()
+  {
+    this.navCtr.back();
+  }
   ngOnInit() {}
   ionViewWillEnter() {
     //  console.log("this.ionViewWillEnter");
@@ -52,11 +61,25 @@ export class UserTasksPage implements OnInit {
   ionViewDidLoad() {
     // console.log("this.ionViewDidLoad");
   }
+  getInprogress()
+  {
+    this.userProgress= new Array();
+    this.userProgress= this.userProgressList.filter((x) => this.parsPercentage(x.progress) < 100).slice();
+  }
+  getCompleted()
+  {
+  
+    this.userProgress= new Array();
+    this.userProgress= this.userProgressList.filter((x) => this.parsPercentage(x.progress) >= 100).slice(); 
+     console.log("getCompleted", this.userProgress);
+  }
+
+   
   getTotalInProgress(): any {
-    return this.userProgress.filter((x) => this.parsPercentage(x.progress) < 100).slice().length;
+    return this.userProgressList.filter((x) => this.parsPercentage(x.progress) < 100).slice().length;
   }
   getTotalCompleted(): any {
-    return this.userProgress.filter((x) => this.parsPercentage(x.progress)  >= 100).slice().length;
+    return this.userProgressList.filter((x) => this.parsPercentage(x.progress)  >= 100).slice().length;
   }
   parsPercentage(val): number {
     return parseFloat(val) > 1 ? parseFloat(val) : parseFloat(val) * 100;

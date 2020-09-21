@@ -13,13 +13,15 @@
           <ion-col size="12">
             <ion-item>
               <ion-avatar slot="start" name="avatar">
-                <img src="../assets/images/avatar.svg" />
+                <!-- <img src="../assets/images/avatar.svg" /> -->
+                <text-avatar text="{{ user.userName }}"></text-avatar>
               </ion-avatar>
               <ion-label slot="" color="primary">
                 <b> {{ user.userName }}</b>
               </ion-label>
             </ion-item>
-          </ion-col> </ion-row>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col size="auto">
             <ion-chip outline color="primary">
@@ -43,13 +45,13 @@
             </ion-chip>
           </ion-col>
         </ion-row>
-        <ion-list>
+        <ion-list lines="full">
           <ion-row
             *ngFor="let item of userProgress; let i = index"
-            style="justify-items: left;"
+            style="justify-items: left"
           >
             <ion-col>
-              <ion-item>
+              <ion-item detail="true">
                 <ion-label
                   class="ion-text-start ion-text-capitalize ion-text-wrap"
                 >
@@ -67,7 +69,7 @@
                       : 'primary'
                   "
                 >
-                  {{ item.progress }}%
+                  {{ parsPercentage(item.progress) }}%
                 </ion-badge>
               </ion-item>
             </ion-col>

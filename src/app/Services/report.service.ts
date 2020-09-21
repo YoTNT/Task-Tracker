@@ -28,5 +28,8 @@ export class ReportService
   {
     return this.httpClient.get<UserInfo[]>(`${this.path}/id/`);
   } 
+  getTasksToday(): Promise<Task[]>{
+    return this.httpClient.get<Task[]>(`${this.path}/task/today`).toPromise();
+  }
 
 }
