@@ -1,0 +1,28 @@
+.expand-wrapper {
+  transition: max-height 0.4s ease-in-out;
+  overflow: hidden;
+  height: auto;
+}
+
+.collapsed {
+  max-height: 0 !important;
+}
+.ActiveTask {
+  background: var(--ion-color-light-tint);
+  color: var(--ion-color-primary);
+
+}
+.item-background-color{
+  color: var(--ion-color-dark-tint);
+   --ion-item-background:var(--ion-color-light-tint);  
+}
+
+
+.my-custom-modal-class   {
+  --backdrop-opacity: 0.8 !important;
+
+  .modal-wrapper {
+    --height: 40% !important;
+    position: absolute;
+  }
+}

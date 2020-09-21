@@ -1,0 +1,145 @@
+<ion-header
+  class="ion-no-margin ion-no-padding ion-no-border"
+  style="
+    display: inline-block;
+    padding-bottom: 1px;
+    background: rgb(85, 182, 213);
+    background: linear-gradient(
+      90deg,
+      rgba(85, 182, 213, 0.7959558823529411) 20%,
+      rgba(13, 95, 136, 0.8939950980392157) 50%,
+      rgba(85, 182, 213, 0.804359243697479) 80%
+    );
+    background-size: 100% 1px;
+    background-position: bottom 0 left 0, bottom 1px left 0;
+    background-repeat: no-repeat;
+  "
+>
+  <ion-toolbar>
+    <ion-item lines="full">
+      <ion-buttons>
+        <ion-button slot="start" (click)="back()">
+          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <span>
+        Task History
+        <b color="primary" *ngIf=" subTasks.length>0">({{subTasks.length}})</b>
+      </span>
+      <ion-buttons *ngIf="auth.isLoggedIn()" slot="end">
+        <ion-button (click)="openNewTaskModal()">
+          <ion-icon slot="icon-only" name="add"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label
+        color="primary"
+        class="ion-text-start ion-text-capitalize ion-text-wrap"
+      >
+        <h3><b>{{ loadedTask.task }} </b></h3>
+
+        <ion-text size="samll" slot="start" color="secondary">
+          <i style="font-size: smaller"> {{loadedTask.taskdate|date}}</i>
+        </ion-text>
+        <ion-badge
+          style="float: right"
+          [color]="
+            loadedTask.progress > 99
+                  ? 'success'
+                  : loadedTask.progress < 50
+                  ? 'warning'
+                  : 'primary'
+              "
+        >
+          {{ loadedTask.progress}}%
+        </ion-badge>
+        <ion-label size="samll" class="ion-text-start ion-text-capitalize">
+          <ion-text
+            color="medium"
+            size="samll"
+            class="ion-text-start ion-text-wrap"
+          >
+            <p>{{ loadedTask.details}}</p>
+          </ion-text>
+        </ion-label>
+        <!-- <ion-text
+          color="secondary"
+          size="samll"
+          class="ion-text-start ion-text-wrap"
+        >
+          Toatal Sub-Tasks:
+        </ion-text> -->
+      </ion-label>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Card view  -->
+<ion-content class="ion-no-margin ion-no-padding">
+  <!-- <ion-grid class="ion-text-left ion-align-items-stretch">
+    <ion-row>
+      <ion-col
+        size-xs="12"
+        size-xsm="12"
+        size-xs="12"
+        size-med="8"
+        offset-med="2"
+        size-lg="6"
+        offset-lg="3"
+        size-xlg="6"
+        offset-xlg="3"     [ngStyle]="{'detail-icon':item.expanded==true? 'chevron-down-outline' : 'chevron-up-outline' }"
+      > -->
+
+  <ion-card *ngIf="subTasks.length>0">
+    <ion-card-content class="ion-no-margin ion-no-padding">
+      <ion-row *ngFor="let item of subTasks" (click)="expandItem(item)">
+        <ion-col size="12">
+          <ion-item
+            detail="true"
+            lines="full"
+            #lstTasks
+            [color]="item.expanded ? 'secondary' : '#'"
+            [detailIcon]="item.expanded ? 'remove' : 'chevron-down-outline'"
+          >
+            <ion-label
+              size="small"
+              class="ion-text-capitalize ion-text-wrap"
+              color="secondary"
+              [ngClass]="{'':!item.expanded,'ActiveTask':item.expanded}"
+            >
+              <!-- <ion-icon
+                  style="float: right;"
+                  slot="icon-only"
+                  color="primary"
+                  src="../assets/images/chevron-forward-outline.svg "
+                ></ion-icon> -->
+              <span> {{item.subtask}} </span>
+            </ion-label>
+          </ion-item>
+
+          <app-expandable [expanded]="item.expanded" color="medium">
+            <app-sub-task [SubTaskObj]="item"></app-sub-task>
+          </app-expandable>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <div
+    #divMsg
+    style="display: none"
+    class="ion-no-padding ion-margin-top ion-margin-horizontal"
+  >
+    <ion-chip
+      color="danger"
+      class="ion-justify-content-center"
+      style="width: 98%"
+    >
+      <ion-label>There is no History entries for this task .</ion-label>
+    </ion-chip>
+  </div>
+  <!-- </ion-col>
+    </ion-row>
+  </ion-grid> -->
+</ion-content>

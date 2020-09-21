@@ -17,10 +17,10 @@ export class TabsPage implements OnInit {
       this.auth.userChange.emit(us);
     }
   }
-  enableDarkTheme() {
-    this.themeServ.enableDarkMode();
-  }
-  enableLightTheme() {
-    this.themeServ.enableLightMode();
-  }
+  // enableDarkTheme() {
+  //   this.themeServ.enableDarkMode();
+  // }
+  // enableLightTheme() {
+  //   this.themeServ.enableLightMode();
+  // }
 }

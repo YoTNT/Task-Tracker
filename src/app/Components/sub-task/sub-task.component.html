@@ -1,0 +1,122 @@
+<ion-grid
+  [ngClass]="{ '': !SubTaskObj.expanded, ActiveTask: SubTaskObj.expanded }"
+>
+  <ion-row>
+    <ion-col class="ion-margin-horizontal">
+      <ion-list
+        class="ion-no-margin ion-no-padding"
+        [(ngModel)]="SubTaskObj"
+        ngDefaultControl
+        name="lstobjects"
+        #lstobjects
+      >
+        <ion-item
+          lines="none"
+          class="ion-no-margin "
+          [ngClass]="{
+            '': !SubTaskObj.expanded,
+            'item-background-color': SubTaskObj.expanded
+          }"
+        >
+          <ion-label class="ion-no-margin ion-no-padding">
+            <ion-item-divider
+              class="ion-no-margin ion-no-padding"
+              style="border-bottom: thin; border-bottom-style: solid; border-color: lightskyblue;margin-bottom:2px;padding-bottom:0px;"
+              color="light"
+            >
+              <ion-label slot="start" color="primary">
+                <span
+                  style="display: flex;align-items: center ;margin-bottom:4px; "
+                >
+                  <small>
+                    <ion-avatar
+                      class="ion-no-padding"
+                      style=" margin-right:4px !important ;width: 26px;height: 26px; "
+                    >
+                      <text-avatar
+                        text="{{ getTaskOwnerName(SubTaskObj.userid) }}"
+                      ></text-avatar>
+                    </ion-avatar>
+                  </small>
+                  {{ getTaskOwnerName(SubTaskObj.userid) }}
+                </span>
+              </ion-label>
+              <ion-label
+                *ngIf="auth.isLoggedIn()"
+                slot="end"
+                color="warning"
+                style="position:fixed  !important;float:right;right:0px !important;; "
+              >
+                <ion-buttons collapse="true" (click)="openNewTaskModal()">
+                  <ion-button>
+                    <ion-icon
+                      slot="icon-only"
+                      name="create-sharp"
+                      size="large"
+                      style="float: right !important "
+                    >
+                    </ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-label>
+            </ion-item-divider>
+
+            <ion-label
+              id="lblcontiner"
+              class="ion-text-start ion-text-capitalize ion-text-wrap"
+            >
+              <!-- <h3>
+                <b>{{ SubTaskObj.subtask }} </b> 
+                    style="  display: flex;
+                align-items: center ;margin-bottom: 1px; "
+              </h3> -->
+              <div
+                style="  display: flex;
+              align-items: center ;margin-bottom:4px; "
+              >
+            
+                <small>
+                  <ion-badge
+                    size="small"
+                    style=" float:left; max-height: 18px; "
+                    [color]="
+                      parsPercentage(SubTaskObj.progress) > 99
+                        ? 'success'
+                        : parsPercentage(SubTaskObj.progress) < 50
+                        ? 'warning'
+                        : 'primary'
+                    "
+                  >
+                    {{ parsPercentage(SubTaskObj.progress) }}%
+                  </ion-badge></small
+                >
+     
+                <ion-note slot="start" size="samll" color="secondary">
+                  <p style="margin-left: 5px;">
+                    {{ SubTaskObj.taskdate | date }}
+                  </p>
+                </ion-note>
+              </div>
+              <ion-label
+                style="margin-top:4px ;"
+                size="samll"
+                class="ion-text-start ion-text-capitalize"
+              >
+                <ion-text size="samll" class="ion-text-start ion-text-wrap">
+                  <p>{{ SubTaskObj.details }}</p>
+                </ion-text>
+              </ion-label>
+            </ion-label></ion-label
+          >
+        </ion-item>
+      </ion-list>
+
+      <!--     
+        <div class="ion-padding">
+          <ion-button expand="block" type="submit" class="ion-no-margin"
+            >Save</ion-button
+          >
+        </div> -->
+    </ion-col>
+  </ion-row>
+</ion-grid>

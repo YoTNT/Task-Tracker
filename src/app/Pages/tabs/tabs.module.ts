@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
  
 
 import { TabsPageRoutingModule } from './tabs-routing.module';
-
+// import{TextAvatarModule} from '../../directives/text-avatar.directive.module'
 import { TabsPage } from './tabs.page';
 
 @NgModule({
@@ -15,6 +15,7 @@ import { TabsPage } from './tabs.page';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
+    // TextAvatarModule
     
   ],
   declarations: [TabsPage],

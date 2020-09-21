@@ -1,19 +1,22 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/tab3" text=""></ion-back-button>
+      <ion-back-button
+        defaultHref="/tasktracker/mytasks"
+        text=""
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title size="small" color="primary"><p>My Tasks</p> </ion-title>
+    <ion-title color="primary"><p>Task Edit</p> </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="deleteTask()">
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      <ion-button color="danger" (click)="deleteTask()">
+        <ion-icon slot="icon-only" size="small" name="trash-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
- 
+
 <!-- Card view  -->
-<ion-content fullscreen>
+<ion-content translucent>
   <ion-grid>
     <ion-row>
       <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
@@ -23,11 +26,10 @@
               >Task Title <ion-text color="danger">*</ion-text></ion-label
             >
             <ion-input
-              style="background-color: transparent;"
+              style="background-color: transparent"
               required
               type="text"
               [(ngModel)]="loadedTask.task"
-              (focusout)="updateTask()"
             ></ion-input>
           </ion-item>
 
@@ -36,11 +38,10 @@
               >Progress % <ion-text color="danger">*</ion-text></ion-label
             >
             <ion-input
-              style="background-color: transparent;"
+              style="background-color: transparent"
               required
               type="number"
               [(ngModel)]="loadedTask.progress"
-              (focusout)="updateTask()"
             ></ion-input>
           </ion-item>
           <ion-item>
@@ -50,9 +51,8 @@
             <ion-textarea
               rows="20"
               cols="20"
-              style="background-color: transparent;"
+              style="background-color: transparent"
               [(ngModel)]="loadedTask.details"
-              (focusout)="updateTask()"
             ></ion-textarea>
           </ion-item>
         </ion-list>
@@ -64,5 +64,14 @@
         </div> -->
       </ion-col>
     </ion-row>
-  </ion-grid>
-</ion-content>
+  </ion-grid> </ion-content
+><ion-footer class="ion-text-center ion-margin ion-justify-content-center ion-align-items-center ion-align-self-center" >
+  <ion-button style="max-width:400px; width:70%;"
+    class="ion-text-capitalize ion-align-self-center"
+    color="primary"
+    
+    (click)="updateTask()"
+    [disabled]="!loadedTask.details||!loadedTask.task||loadedTask.progress<0"
+    >Save
+  </ion-button>
+</ion-footer>

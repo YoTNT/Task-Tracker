@@ -8,7 +8,7 @@
               <ion-buttons slot="start">
                 <ion-back-button
                   text=""
-                  defaultHref="tasktracker/team-progress"
+                  defaultHref="/tasktracker/teamprogress"
                 ></ion-back-button>
               </ion-buttons>
 
@@ -16,24 +16,27 @@
                 <b> {{user.userName}}</b>
               </ion-label>
               <ion-avatar slot="start" name="avatar">
-                <img src="../assets/images/avatar.svg" />
+                <!-- <img src="../assets/images/avatar.svg" /> -->
+                <text-avatar  text ={{user.userName}}></text-avatar>
               </ion-avatar>
             </ion-item>
           </ion-col> </ion-row
         ><ion-row>
-          <ion-col size="auto">
+          <ion-col size="auto" (click)="getUserTasks()">
             <ion-chip outline color="primary">
-              <ion-label> Tasks <b>({{userProgress.length}}) </b></ion-label>
+              <ion-label>
+                Tasks <b>({{userProgressList.length}}) </b></ion-label
+              >
             </ion-chip>
           </ion-col>
-          <ion-col size="auto">
+          <ion-col size="auto" (click)="getInprogress()">
             <ion-chip outline color="warning">
               <ion-label>
                 In-Progress <b>({{getTotalInProgress()}}) </b>
               </ion-label>
             </ion-chip>
           </ion-col>
-          <ion-col size="auto">
+          <ion-col size="auto" (click)="getCompleted()">
             <ion-chip outline color="success">
               <ion-label> Done <b>({{getTotalCompleted()}}) </b> </ion-label>
             </ion-chip>
@@ -42,17 +45,25 @@
         <ion-list>
           <ion-row
             *ngFor="let item of userProgress; let i = index"
-            style="justify-items: left;"
+            style="justify-items: left"
           >
             <ion-col>
-              <ion-item>
+              <ion-item
+                [routerLink]="['/', 'tasktracker', 'taskview', item.id]"
+                detail="true"
+              >
                 <ion-label
                   class="ion-text-start ion-text-capitalize ion-text-wrap"
                 >
                   <h3><b> {{i+1}}- </b>{{ item.task }}</h3>
 
-                  <ion-note size="samll" slot="start" class="default">
-                    <i style="font-size: smaller;"> {{item.taskdate}}</i>
+                  <ion-note
+                    size="samll"
+                    slot="start"
+                    class="default"
+                    color="secondary"
+                  >
+                    <i style="font-size: smaller"> {{item.taskdate|date}}</i>
                   </ion-note>
                 </ion-label>
 

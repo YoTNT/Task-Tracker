@@ -12,6 +12,7 @@ export class ThemeService {
     @Inject(DOCUMENT) private doc: Document
   ) {
     this.render = renderFctry.createRenderer(null, null);
+    this.render.addClass(this.doc.body, "dark-theme");  
   }
 
   enableDarkMode() {

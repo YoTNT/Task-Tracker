@@ -35,7 +35,7 @@ export class TaskProgressService implements OnInit {
 
   ngOnInit(): void {}
 
-  
+ 
   getTasksGroupByUserId(): Array<Array<Task>> {
     let avg: number = 0;
     let counter: number = 0;

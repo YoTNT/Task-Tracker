@@ -1,0 +1,11 @@
+.expand-wrapper {
+    transition:  0.60s ease-in-out;
+    overflow: hidden;
+    height: auto;
+  }
+  
+  .collapsed {
+    max-height: 0 !important;
+  }
+
+  

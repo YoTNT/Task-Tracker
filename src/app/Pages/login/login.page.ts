@@ -44,16 +44,18 @@ export class LoginPage implements OnInit {
     let errmessage = "";
     await new Promise(() => {
       console.log("Sign In");
+      try {
+        this.auth.signIn(this.email, this.pass);
+      } catch (err) {
+        this.loading = false;
+        this.message = err;
+      }
       setTimeout(() => {
-        try {
-          this.auth.signIn(this.email, this.pass);
-          this.auth.userChange.emit(this.auth.getLoggedUser());
-          this.loading = false;
-        } catch (err) {
-          this.loading = false;
-          this.message = err;
-        }
-      }, 2000);
-    }).catch((error) => (this.message = error));
+        this.loading = false;
+      }, 1500);
+    }).catch((error) => {
+      this.message = error;
+      this.loading = false;
+    });
   }
 }

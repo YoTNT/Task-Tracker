@@ -5,28 +5,54 @@
       color="primary"
       size="large"
       slot="start"
-      style="width: 24px !important;height: 24px !important;margin-right: 5px;margin-left: 5px;"
+      style="
+        width: 24px !important;
+        height: 24px !important;
+        margin-right: 5px;
+        margin-left: 5px;
+      "
     ></ion-icon>
     <ion-label slot="start" color="primary"> <p>My Tasks</p></ion-label>
 
-    <ion-buttons slot="end">
+    <!--- /* <ion-buttons slot="end">
+ <ion-button [routerLink]="['/', 'tasktracker', 'submit-my-progress', 'new']"> 
       <ion-button (click)="openNewTaskModal()">
         <ion-icon slot="icon-only" name="add-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> */--->
   </ion-toolbar>
+
 </ion-header>
 
-
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
+<ion-content>  <ion-fab
+  
+  (click)="openNewTaskModal()"
+  vertical="top"
+  horizontal="end"
+  slot="fixed"
+>
+  <ion-fab-button size="small">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+  <div
+    class="ion-no-margin ; no-padding"
+    style="
+      height: 0px;
+      text-align: center !important;
+      position: relative;
+      z-index: 1;
+    "
+  >
+    <ion-refresher
+      style="position: relative; z-index: 2; top: 0px"
+      slot="fixed"
+      (ionRefresh)="doRefresh($event)"
+    >
+      <ion-refresher-content refreshingSpinner="crescent">
+      </ion-refresher-content>
+    </ion-refresher>
+  </div>
   <ion-grid no-padding ion-no-margin>
     <ion-row>
       <ion-col
@@ -36,9 +62,9 @@
         offset-med="3"
         offset-lg="3"
       >
-        <div class="ion-text-center">
-          <ion-spinner color="primary"></ion-spinner>
-        </div>
+        <!-- <div class="ion-text-center">
+          <ion-spinner color="crescent" name="crescent"></ion-spinner>
+        </div> -->
       </ion-col>
     </ion-row>
     <ion-row *ngIf="!isLoading && loadedTasks.length <= 0 && !isLoadingError">
@@ -62,30 +88,33 @@
     <ion-row *ngIf="!isLoading && loadedTasks.length >0">
       <ion-col size="12" size-lg="6" offset-med="3" offset-lg="3">
         <ion-row>
-          <ion-col size="auto">
+          <ion-col size="auto" (click)="getAllTasks()">
             <ion-chip outline color="primary">
               <ion-label> Tasks <b>({{loadedTasks.length}}) </b></ion-label>
             </ion-chip>
           </ion-col>
-          <ion-col size="auto">
+          <ion-col size="auto" (click)="getInprogress()">
             <ion-chip outline color="warning">
-              <ion-label> In-Progress <b>({{1}}) </b> </ion-label>
+              <ion-label>
+                In-Progress <b>({{getTotalInProgress()}}) </b>
+              </ion-label>
             </ion-chip>
           </ion-col>
-          <ion-col size="auto">
+          <ion-col size="auto" (click)="getCompleted()">
             <ion-chip outline color="success">
-              <ion-label> Done <b>({{1}}) </b> </ion-label>
+              <ion-label> Done <b>({{getTotalCompleted()}}) </b> </ion-label>
             </ion-chip>
           </ion-col>
         </ion-row>
-        <ion-list>
+        <ion-list 
+        lines="full">
           <ion-row
-            *ngFor="let tk of loadedTasks let i = index"
-            style="justify-items: left;"
+            *ngFor="let tk of userProgress let i = index"
+            style="justify-items: left"
           >
             <ion-col>
-              <ion-item-sliding #slidingItem>
-                <ion-item
+              <ion-item-sliding #slidingItem> 
+                <ion-item detail="true"
                   [routerLink]="['/', 'tasktracker', 'mytasks', tk.id ]"
                 >
                   <ion-label
@@ -98,7 +127,7 @@
                     </ion-note>
                     <ion-badge
                       slot="end"
-                      style="float: right;"
+                      style="float: right"
                       [color]="
                     tk.progress  > 0.99
                           ? 'success'
@@ -114,16 +143,18 @@
 
                 <ion-item-options>
                   <ion-item-option
-                    color="secondary"
+                    color="primary"
                     (click)="onEdit(tk.id, slidingItem)"
                   >
                     <ion-icon name="create" slot="icon-only"></ion-icon>
                   </ion-item-option>
-                  <ion-item-option color="danger">
+                  <ion-item-option
+                    color="secondary"
+                    [routerLink]="['/', 'tasktracker', 'taskview', tk.id]"
+                  >
                     <ion-icon
-                      name="trash"
+                      name="git-merge-outline"
                       slot="icon-only"
-                      (click)="onDelete(tk, slidingItem)"
                     ></ion-icon>
                   </ion-item-option>
                 </ion-item-options>

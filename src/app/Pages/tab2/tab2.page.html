@@ -30,8 +30,6 @@
       "
     ></ion-icon>
     <ion-label slot="start" color="primary"><p>Reports</p> </ion-label>
- 
-
   </ion-toolbar>
 </ion-header>
 
@@ -41,18 +39,33 @@
       <ion-col size="12" size-lg="6" size-md="6" offset-med="3" offset-lg="3">
         <ion-row style="justify-items: left;">
           <ion-col>
-            <ion-list>
-              <ion-item detail="true" routerLink="./1" >
-             
-
+            <ion-list lines="none">
+              <ion-item detail="true" routerLink="singledayview" class="ion-padding-top">
                 <ion-thumbnail slot="start">
-                  <ion-img  src ="../assets/images/color-pie-chart.svg"></ion-img>
+                  <ion-img
+                    src="../assets/images/pie-chart-single.svg"
+                  ></ion-img>
                 </ion-thumbnail>
 
-                <ion-label color="primary" position="fixed"
+                <ion-label
+                  color="primary"
+               
                   class="ion-text-start ion-text-capitalize ion-text-wrap"
                 >
-                  <p>Users Progress Pie-Chart</p>
+                  <p>User Progress-Day View</p>
+                </ion-label>
+              </ion-item>
+              <ion-item detail="true" routerLink="periodview" class="ion-padding-top"> 
+                <ion-thumbnail slot="start">
+                  <ion-img src="../assets/images/color-pie-chart.svg"></ion-img>
+                </ion-thumbnail>
+
+                <ion-label
+                  color="primary"
+                 
+                  class="ion-text-start ion-text-capitalize ion-text-wrap"
+                >
+                  <p>User Progress-Period View</p>
                 </ion-label>
               </ion-item>
             </ion-list>

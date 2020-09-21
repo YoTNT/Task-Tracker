@@ -2,13 +2,12 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { TabsPage } from "./tabs.page";
 import { ActivateGuard } from "src/app/Services/activate.guard";
- 
-
 
 const routes: Routes = [
   {
     path: "tasktracker",
     component: TabsPage,
+   // pathMatch: 'full',
     // loadChildren: "../tabs/tabs.module#TabsPageModule",
     // pathMatch:'prefix',
     children: [
@@ -32,6 +31,38 @@ const routes: Routes = [
         ],
       },
       {
+        path: "taskview",
+        children: [
+          {
+            path: ":taskid",
+            loadChildren:
+              "../task-subview/task-subview.module#TaskSubviewPageModule",
+          },
+        ],
+      },
+      {
+        path: "create-subtask",
+        children: [
+          {
+            path: ":taskid",
+            canActivate: [ActivateGuard],
+            loadChildren:
+              "../create-subtask/create-subtask.module#CreateSubtaskPageModule",
+          },
+        ],
+      },
+      // {
+      //   path: "create-subtask",
+      //   children: [
+      //     {
+      //       path: ":taskid/:subtaskid",
+      //       canActivate: [ActivateGuard],
+      //       loadChildren:
+      //         "../create-subtask/create-subtask.module#CreateSubtaskPageModule",
+      //     },
+      //   ],
+      // },
+      {
         path: "mytasks",
         canActivate: [ActivateGuard],
         children: [
@@ -50,6 +81,43 @@ const routes: Routes = [
           },
         ],
       },
+      {
+        path: "group-chat",
+      //  pathMatch: 'full',
+        canActivate: [ActivateGuard],
+        children: [
+          {
+            path: "",
+            loadChildren: "../group-chat/group-chat.module#GroupChatPageModule",
+          },
+        ],
+      },
+      {
+        path: "start-chat",
+      //  pathMatch: 'full',
+        canActivate: [ActivateGuard],
+        children: [
+          {
+            path: "",
+            loadChildren: "../start-chat/start-chat.module#StartChatPageModule",
+          },
+        ],
+      },
+      // {
+      //   path: "chat",
+      //   children: [
+      //     {
+      //       path: "",
+
+      //       children: [
+      //         {
+      //           path: ":email/:userid",
+      //           loadChildren: "../chat/chat.module#ChatPageModule",
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
       // {
       //   path: "login",
       //   children: [

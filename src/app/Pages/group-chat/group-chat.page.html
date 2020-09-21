@@ -1,0 +1,196 @@
+<!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content
+    pullingIcon="arrow-down-outline"
+    pullingText="Pull to refresh"
+    refreshingSpinner="dots"
+    refreshingText="Refreshing...">
+  </ion-refresher-content>
+</ion-refresher> -->
+
+<ion-header class="ion-no-margin">
+  <ion-toolbar>
+    <ion-segment
+      style="width: 100%"
+      color="dark"
+      (ionChange)="0"
+      #checkTeam
+      value="chat"
+    >
+      <ion-segment-button size="small" value="chat" layout="icon-start">
+        <ion-label
+          [color]="checkTeam.value=='chat' ? 'secondary' : ''"
+          position="float"
+          >Chat</ion-label
+        >
+        <ion-icon
+          [color]="checkTeam.value=='chat' ? 'secondary' : ''"
+          name="chatbox-ellipses-outline"
+        ></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button size="small" value="group" layout="icon-start">
+        <ion-label
+          [color]="checkTeam.value=='group' ? 'secondary' : ''"
+          position="float"
+          >Chat Groups</ion-label
+        >
+        <ion-icon
+          [color]="checkTeam.value=='group' ? 'secondary' : ''"
+          src="../assets/images/chat-group.svg"
+        ></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-fab
+    *ngIf=' checkTeam.value=="group" '
+    vertical="top"
+    horizontal="end"
+    slot="fixed"
+  >
+    <ion-fab-button
+      routerLink="/tasktracker/start-chat"
+      size="small"
+      color="light"
+      class="ion-no-margin ion-no-padding"
+    >
+      <ion-icon name="add" color="primary"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-grid *ngIf=' checkTeam.value=="chat" '>
+    <ion-row class="ion-no-margin ; no-padding">
+      <ion-col size-med="6" size-lg="6" offset-med="3" offset-lg="3">
+        <div
+          class="ion-no-margin ; no-padding"
+          style="
+            height: 0px;
+            text-align: center !important;
+            position: relative;
+            z-index: 1;
+          "
+        >
+          <ion-refresher
+            #refTeamProgress
+            id="refTeamProgress"
+            style="position: relative; z-index: 2; top: 0px"
+            slot="fixed"
+            (ionRefresh)="doRefresh($event)"
+          >
+            <ion-refresher-content color="primary" refreshingSpinner="crescent">
+            </ion-refresher-content>
+          </ion-refresher>
+        </div>
+        <ion-list *ngFor="let item of listOfUsers;" name="lstusers">
+          <ion-row style="justify-items: left">
+            <ion-col>
+              <ion-item
+                detail="false"
+                (click)="oneOnOneChat(item.payload.doc.data().email,item.payload.doc.data().userName)"
+                style="text-align: center !important;"
+              >
+                <ion-avatar slot="start" name="avatar">
+                  <!-- <img src="../assets/images/avatar.svg" /> -->
+                  <text-avatar
+                    text="{{item.payload.doc.data().userName}}"
+                  ></text-avatar>
+                </ion-avatar>
+                <ion-label
+                  class="ion-align-items-center"
+                  color="secondary"
+                  position="stacked"
+                  class="ion-text-start ion-text-capitalize"
+                >
+                  {{ item.payload.doc.data().userName }}
+                  <ion-label  mode="md" style="margin-top:-5px"class="ion-no-margin ion-no-padding ion-text-wrap">
+                    <ion-note class="ion-text-wrap" >
+                      <small > {{ item.payload.doc.data().email }}</small>
+                    </ion-note></ion-label
+                  >
+                </ion-label>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="auto">
+              <ion-icon
+                (click)="oneOnOneChat(item.payload.doc.data().email,item.payload.doc.data().userName)"
+                color="primary"
+                name="chatbox-ellipses-outline"
+                style="
+                  flex: left;
+                  margin-top: 10px;
+                  margin-left: 5px;
+                  margin-right: 5px;
+                  width: 20px;
+                  height: 20px;
+                "
+                class="ion-text-start"
+              ></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf=' checkTeam.value=="group" '>
+    <ion-row>
+      <ion-col>
+        <ion-item-divider
+          class="ion-no-margin ion-no-padding"
+          color="secondary"
+        >
+          <ion-chip outline color="dark">
+            <ion-label color="dark"> Your Chat Groups </ion-label>
+          </ion-chip>
+        </ion-item-divider>
+
+        <div
+          class="ion-no-margin ion-no-padding"
+          style="
+            height: 0px;
+            text-align: center !important;
+            position: relative;
+            z-index: 1;
+          "
+        >
+          <ion-refresher
+            #refTeamProgress2
+            id="refTeamProgress"
+            style="position: relative; z-index: 2; top: 0px"
+            slot="fixed"
+            (ionRefresh)="doRefresh($event)"
+          >
+            <ion-refresher-content color="primary" refreshingSpinner="crescent">
+            </ion-refresher-content>
+          </ion-refresher>
+        </div>
+        <ion-list>
+          <ion-item
+            button
+            *ngFor="let item of listOfGroups2;"
+            (click)="GroupChat(item.payload.doc.data().id,item.payload.doc.data().title)"
+          >
+            <ion-label class="ion-text-wrap">
+              <ion-text color="secondary">
+                <h3>{{ item.payload.doc.data().title }}</h3>
+              </ion-text>
+              <p>{{ item.payload.doc.data().users}} Users</p>
+              <!-- <p>Group id: {{ item.payload.doc.data().id }}</p> -->
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-footer>
+      <ion-toolbar color="primary">
+        <ion-button
+          color="light"
+          fill="clear"
+          expand="full"
+          routerLink="/start-chat"
+          >Start new Group</ion-button
+        >
+      </ion-toolbar>
+    </ion-footer> -->
+  </ion-grid>
+</ion-content>
